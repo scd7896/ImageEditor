@@ -24,14 +24,6 @@ class ImageEditor {
 		this.canvas = new Canvas(target);
 		this.options = new Options(options, this.canvas, optionWrapperDiv);
 	}
-
-	addRect(color) {
-		this.canvas.addRect(color);
-	}
-
-	getImage() {
-		return this.canvas.getImage();
-	}
 }
 
 export default ImageEditor;
