@@ -7,6 +7,6 @@
     "lib": ["ES2019", "ESNext", "DOM"],
     "noImplicitAny": false,
     "moduleResolution": "classic",
-    "typeRoots": ["./types"]
+    "typeRoots": ["types"]
   }
 }

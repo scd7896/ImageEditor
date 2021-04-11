@@ -86,6 +86,20 @@ class Options {
 			input.click();
 		});
 	}
+
+	undo() {
+		const button = this.createButton("뒤로");
+		button.addEventListener("click", () => {
+			this.canvas.undo();
+		});
+	}
+
+	redo() {
+		const button = this.createButton("앞으로");
+		button.addEventListener("click", () => {
+			this.canvas.redo();
+		});
+	}
 }
 
 export default Options;

@@ -1,14 +1,17 @@
 import { fabric } from "fabric";
+import "fabric-history";
+import { HistoryCanvas } from "../types/fabric/index";
 
 class Canvas {
-	private canvas: fabric.Canvas;
+	private canvas: HistoryCanvas;
 	private resorceCanvas: HTMLCanvasElement;
 	private selected: fabric.Object[] | null = null;
 
 	constructor(canvas: HTMLCanvasElement) {
 		const target: HTMLCanvasElement = canvas;
 		this.resorceCanvas = target;
-		this.canvas = new fabric.Canvas(target);
+		this.canvas = new fabric.Canvas(target) as HistoryCanvas;
+
 		this.selectedEvent();
 		this.addRect = this.addRect.bind(this);
 	}
@@ -60,6 +63,14 @@ class Canvas {
 
 	getSelected() {
 		return this.selected;
+	}
+
+	undo() {
+		this.canvas.undo();
+	}
+
+	redo() {
+		this.canvas.redo();
 	}
 }
 
