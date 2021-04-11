@@ -4,4 +4,4 @@ const init = (id: HTMLCanvasElement | string, options) => {
 	const Editor = new ImageEditor(id, options);
 };
 
-init("canvas-example", ["rect", "color"]);
+init("canvas-example", { buttons: ["rect", "color", "pen"] });

@@ -13,8 +13,14 @@ class Canvas {
 		this.addRect = this.addRect.bind(this);
 	}
 
+	toInitSet() {
+		this.canvas.isDrawingMode = false;
+		this.selected = null;
+	}
+
 	selectedEvent() {
 		function handleSelect(obj: any) {
+			console.log(obj.target);
 			if (obj.target._objects) {
 				this.selected = obj.target._objects;
 			} else {
@@ -36,6 +42,16 @@ class Canvas {
 		});
 
 		this.canvas.add(rect);
+	}
+
+	drwaingModeOn(color = "#000", width = 30) {
+		this.canvas.isDrawingMode = true;
+		this.canvas.freeDrawingBrush.color = color;
+		this.canvas.freeDrawingBrush.width = width;
+	}
+
+	drwaingModeOff() {
+		this.canvas.isDrawingMode = false;
 	}
 
 	getImage() {
