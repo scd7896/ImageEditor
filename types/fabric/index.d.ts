@@ -6,4 +6,6 @@ export class HistoryCanvas extends fabric.Canvas {
 	clearHistory(): void;
 	offHistory(): void;
 	onHistory(): void;
+	historyRedo: string[];
+	historyUndo: string[];
 }

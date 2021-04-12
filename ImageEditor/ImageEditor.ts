@@ -23,6 +23,44 @@ class ImageEditor {
 		parent.appendChild(wrapperDiv);
 		this.canvas = new Canvas(target);
 		this.options = new Options(options, this.canvas, optionWrapperDiv);
+		window.addEventListener("keydown", this.keyEventListner);
+		const config = {
+			childList: true,
+		};
+		const observer = new MutationObserver((mutationsList, observer) => {
+			mutationsList.map((node) => {
+				node.removedNodes.forEach((removeNode) => {
+					if (removeNode === wrapperDiv) {
+						observer.disconnect();
+						window.removeEventListener("keydown", this.keyEventListner);
+					}
+				});
+			});
+		});
+		observer.observe(wrapperDiv.parentNode, config);
+	}
+
+	keyEventListner = ({ key, ctrlKey, metaKey }: KeyboardEvent) => {
+		if (ctrlKey || metaKey) {
+			this.ctrlKeyEvent(key);
+		} else {
+			this.notCtrlKeyEvent(key);
+		}
+	};
+	notCtrlKeyEvent(key: string) {}
+
+	ctrlKeyEvent(key: string) {
+		console.log(key);
+		switch (key) {
+			case "z":
+			case "Z":
+				this.canvas.undo();
+				break;
+			case "y":
+			case "Y":
+				this.canvas.redo();
+				break;
+		}
 	}
 }
 

@@ -66,11 +66,20 @@ class Canvas {
 	}
 
 	undo() {
+		console.log(this.canvas);
 		this.canvas.undo();
 	}
 
 	redo() {
 		this.canvas.redo();
+	}
+
+	get undoHistoryLength() {
+		return this.canvas.historyUndo.length;
+	}
+
+	get redoHistoryLength() {
+		return this.canvas.historyRedo.length;
 	}
 }
 
