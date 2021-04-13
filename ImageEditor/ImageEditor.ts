@@ -1,9 +1,11 @@
 import Canvas from "./Canvas";
 import Options from "./Options";
+import Sticker from "./Sticker";
 
 class ImageEditor {
 	private canvas: Canvas;
 	private options: Options;
+	private sticker: Sticker;
 
 	constructor(canvas: string | HTMLCanvasElement, options) {
 		let target: HTMLCanvasElement;
@@ -16,13 +18,23 @@ class ImageEditor {
 		parent.removeChild(target);
 		const wrapperDiv = document.createElement("div");
 		const optionWrapperDiv = document.createElement("div");
+		const stickerWrapperDiv = document.createElement("div");
+
 		wrapperDiv.classList.add("wrapper");
 		optionWrapperDiv.classList.add("option-wrapper");
 		wrapperDiv.appendChild(target);
 		wrapperDiv.appendChild(optionWrapperDiv);
+		wrapperDiv.appendChild(stickerWrapperDiv);
+
 		parent.appendChild(wrapperDiv);
+
 		this.canvas = new Canvas(target);
 		this.options = new Options(options, this.canvas, optionWrapperDiv);
+		this.sticker = new Sticker(options.images, this.canvas);
+		this.sticker.imageList.map((img) => {
+			stickerWrapperDiv.appendChild(img);
+		});
+
 		window.addEventListener("keydown", this.keyEventListner);
 		const config = {
 			childList: true,

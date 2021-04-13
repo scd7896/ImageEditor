@@ -65,6 +65,16 @@ class Canvas {
 		return this.selected;
 	}
 
+	addImage(img: HTMLImageElement) {
+		const image = new fabric.Image(img, {
+			width: img.width,
+			height: img.height,
+			angle: 0,
+			...this.canvas.getCenter(),
+		});
+		this.canvas.add(image);
+	}
+
 	undo() {
 		console.log(this.canvas);
 		this.canvas.undo();
