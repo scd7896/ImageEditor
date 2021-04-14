@@ -74,7 +74,7 @@ class Canvas {
 			filters: [
 				new fabric.Image.filters.RemoveColor({
 					color: "#ffffff",
-					threshold: 0.5,
+					threshold: 0,
 				}),
 			],
 		});
