@@ -1,5 +1,5 @@
 import Canvas from "./Canvas";
-import { getResizeWidthHeight } from "./util/Resize";
+import { getResizeImage } from "./util/Resize";
 
 export default class Sticker {
 	private images: HTMLImageElement[];
@@ -10,10 +10,10 @@ export default class Sticker {
 			img.crossOrigin = "anonymous";
 			tmpImg.crossOrigin = "anonymous";
 			img.onload = () => {
-				const resize = getResizeWidthHeight(img);
-				tmpImg.width = 100;
-				tmpImg.height = 100;
-				tmpImg.src = URL.createObjectURL(resize);
+				const { file, width, height } = getResizeImage(img);
+				tmpImg.width = width;
+				tmpImg.height = height;
+				tmpImg.src = URL.createObjectURL(file);
 			};
 
 			tmpImg.onclick = () => {

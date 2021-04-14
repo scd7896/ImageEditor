@@ -1,8 +1,25 @@
-export function getResizeWidthHeight(_IMG) {
-	// //canvas에 이미지 객체를 리사이징해서 담는 과정
+function getResizeWidthHeight({ width, height }: HTMLImageElement) {
+	const MAX_SIZE = 100;
+	let resizeWidth;
+	let resizeHeight;
+	if (width < height) {
+		resizeHeight = MAX_SIZE;
+		resizeWidth = (width * MAX_SIZE) / height;
+	} else {
+		resizeWidth = MAX_SIZE;
+		resizeHeight = (height * MAX_SIZE) / width;
+	}
+	return {
+		width: resizeWidth,
+		height: resizeHeight,
+	};
+}
+
+export function getResizeImage(_IMG: HTMLImageElement) {
 	const canvas = document.createElement("canvas") as HTMLCanvasElement;
-	canvas.width = 100; //리사이징하여 그릴 가로 길이
-	canvas.height = 100; //리사이징하여 그릴 세로 길이
+	const { width, height } = getResizeWidthHeight(_IMG);
+	canvas.width = width;
+	canvas.height = height;
 
 	canvas.getContext("2d").drawImage(_IMG, 0, 0, canvas.width, canvas.height);
 
@@ -19,5 +36,5 @@ export function getResizeWidthHeight(_IMG) {
 	//리사이징된 file 객체
 	const tmpThumbFile = new Blob([ab], { type: mimeString });
 
-	return tmpThumbFile;
+	return { file: tmpThumbFile, width, height };
 }
