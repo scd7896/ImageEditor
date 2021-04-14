@@ -13,6 +13,7 @@ export default class Sticker {
 				const { file, width, height } = getResizeImage(img);
 				tmpImg.width = width;
 				tmpImg.height = height;
+
 				tmpImg.src = URL.createObjectURL(file);
 			};
 

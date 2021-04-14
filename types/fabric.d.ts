@@ -1,3 +1,4 @@
+import "fabric";
 import fabric = require("fabric/fabric-impl");
 
 export class HistoryCanvas extends fabric.Canvas {

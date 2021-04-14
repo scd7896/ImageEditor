@@ -26,7 +26,6 @@ export function getResizeImage(_IMG: HTMLImageElement) {
 	//canvas의 dataurl를 blob(file)화 하는 과정
 	const dataURL = canvas.toDataURL("image/png"); //png => jpg 등으로 변환 가능
 	const byteString = atob(dataURL.split(",")[1]);
-	const mimeString = dataURL.split(",")[0].split(":")[1].split(";")[0];
 	const ab = new ArrayBuffer(byteString.length);
 	const ia = new Uint8Array(ab);
 	for (let i = 0; i < byteString.length; i++) {
@@ -34,7 +33,7 @@ export function getResizeImage(_IMG: HTMLImageElement) {
 	}
 
 	//리사이징된 file 객체
-	const tmpThumbFile = new Blob([ab], { type: mimeString });
+	const tmpThumbFile = new Blob([ab], { type: "image/png" });
 
 	return { file: tmpThumbFile, width, height };
 }

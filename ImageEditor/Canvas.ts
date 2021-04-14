@@ -1,7 +1,6 @@
 import { fabric } from "fabric";
 import "fabric-history";
-import { HistoryCanvas } from "../types/fabric/index";
-
+import { HistoryCanvas } from "../types/fabric";
 class Canvas {
 	private canvas: HistoryCanvas;
 	private resorceCanvas: HTMLCanvasElement;
@@ -10,7 +9,7 @@ class Canvas {
 	constructor(canvas: HTMLCanvasElement) {
 		const target: HTMLCanvasElement = canvas;
 		this.resorceCanvas = target;
-		this.canvas = new fabric.Canvas(target) as HistoryCanvas;
+		this.canvas = <HistoryCanvas>new fabric.Canvas(target);
 
 		this.selectedEvent();
 		this.addRect = this.addRect.bind(this);
@@ -66,12 +65,20 @@ class Canvas {
 	}
 
 	addImage(img: HTMLImageElement) {
+		console.log("as");
 		const image = new fabric.Image(img, {
 			width: img.width,
 			height: img.height,
 			angle: 0,
 			...this.canvas.getCenter(),
+			filters: [
+				new fabric.Image.filters.RemoveColor({
+					color: "#ffffff",
+					threshold: 0.5,
+				}),
+			],
 		});
+
 		this.canvas.add(image);
 	}
 
