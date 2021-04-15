@@ -1,26 +1,12 @@
 import Canvas from "./Canvas";
+import OptionState from "./OptionState";
 
-class Options {
-	private options: Array<string>;
+class Options extends OptionState {
 	private canvas: Canvas;
-	private optionWrapper: HTMLDivElement;
-	private selectedColor: string;
-	private selectedWidth: number;
-	private mode: string;
 
-	constructor(options, canvas: Canvas, optionWrapper: HTMLDivElement) {
+	constructor(option, canvas: Canvas) {
+		super();
 		this.canvas = canvas;
-		this.optionWrapper = optionWrapper;
-		options.buttons.map((button) => {
-			this[button]();
-		});
-	}
-
-	createButton(title) {
-		const button = document.createElement("button");
-		button.textContent = title;
-		this.optionWrapper.appendChild(button);
-		return button;
 	}
 
 	optionInitSet() {
@@ -28,77 +14,45 @@ class Options {
 		this.mode = null;
 	}
 
-	download() {
+	rectClick() {
 		this.optionInitSet();
-		const button = this.createButton("다운로드");
+		this.canvas.addRect(this.selectedColor);
 	}
 
-	upload() {
-		this.optionInitSet();
-		const button = this.createButton("업로드");
+	clickPen() {
+		if (this.mode !== "pen") {
+			this.mode = "pen";
+			this.canvas.drwaingModeOn(this.selectedColor, this.selectedWidth);
+		} else {
+			this.mode = null;
+			this.canvas.drwaingModeOff();
+		}
 	}
 
-	rect() {
-		const button = this.createButton("사각형");
-		button.addEventListener("click", () => {
-			this.optionInitSet();
-			this.canvas.addRect(this.selectedColor);
-		});
+	colorChange(e) {
+		const selected = this.canvas.getSelected();
+		if (selected) {
+			selected.map((obj) => {
+				if (obj.type === "path") {
+					obj.set("stroke", e.target.value);
+				} else {
+					obj.set("backgroundColor", e.target.value);
+					obj.set("fill", e.target.value);
+				}
+			});
+		}
+		if (this.mode === "pen") {
+			this.canvas.drwaingModeOn(e.target.value);
+		}
+		this.selectedColor = e.target.value;
 	}
 
-	pen() {
-		const button = this.createButton("펜");
-		button.addEventListener("click", () => {
-			if (this.mode !== "pen") {
-				this.mode = "pen";
-				this.canvas.drwaingModeOn(this.selectedColor, this.selectedWidth);
-			} else {
-				this.mode = null;
-				this.canvas.drwaingModeOff();
-			}
-		});
+	undoClick() {
+		this.canvas.undo();
 	}
 
-	color() {
-		const input = document.createElement("input");
-		const button = this.createButton("컬러선택");
-		input.style.display = "none";
-		input.type = "color";
-		button.parentElement.appendChild(input);
-		input.addEventListener("change", () => {
-			const selected = this.canvas.getSelected();
-			if (selected) {
-				selected.map((obj) => {
-					if (obj.type === "path") {
-						obj.set("stroke", input.value);
-					} else {
-						obj.set("backgroundColor", input.value);
-						obj.set("fill", input.value);
-					}
-				});
-			}
-			if (this.mode === "pen") {
-				this.canvas.drwaingModeOn(input.value);
-			}
-			this.selectedColor = input.value;
-		});
-		button.addEventListener("click", () => {
-			input.click();
-		});
-	}
-
-	undo() {
-		const button = this.createButton("뒤로");
-		button.addEventListener("click", () => {
-			this.canvas.undo();
-		});
-	}
-
-	redo() {
-		const button = this.createButton("앞으로");
-		button.addEventListener("click", () => {
-			this.canvas.redo();
-		});
+	redoClick() {
+		this.canvas.redo();
 	}
 }
 
