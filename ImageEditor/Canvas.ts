@@ -47,6 +47,7 @@ class Canvas {
 	}
 
 	drwaingModeOn(color = "#000", width = 30) {
+		this.toInitSet();
 		this.canvas.isDrawingMode = true;
 		this.canvas.freeDrawingBrush.color = color;
 		this.canvas.freeDrawingBrush.width = width;
