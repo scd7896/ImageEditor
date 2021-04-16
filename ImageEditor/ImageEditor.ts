@@ -55,25 +55,32 @@ class ImageEditor {
 		observer.observe(wrapperDiv.parentNode, config);
 	}
 
-	keyEventListner = ({ key, ctrlKey, metaKey }: KeyboardEvent) => {
+	keyEventListner = ({ key, ctrlKey, metaKey, shiftKey }: KeyboardEvent) => {
 		if (ctrlKey || metaKey) {
-			this.ctrlKeyEvent(key);
+			this.ctrlKeyEvent(key, shiftKey);
 		} else {
 			this.notCtrlKeyEvent(key);
 		}
 	};
+
 	notCtrlKeyEvent(key: string) {}
 
-	ctrlKeyEvent(key: string) {
-		console.log(key);
+	ctrlKeyEvent(key: string, shiftKey: boolean) {
 		switch (key) {
 			case "z":
 			case "Z":
-				this.canvas.undo();
+				if (shiftKey) {
+					this.canvas.redo();
+				} else {
+					this.canvas.undo();
+				}
 				break;
-			case "y":
-			case "Y":
-				this.canvas.redo();
+
+			case "[":
+				this.options.brushWidthDown();
+				break;
+			case "]":
+				this.options.brushWidthUp();
 				break;
 		}
 	}
