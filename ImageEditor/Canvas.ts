@@ -1,23 +1,28 @@
 import { fabric } from "fabric";
 import "fabric-history";
+import { ICanvasState } from "../types/CanvasState";
 import { HistoryCanvas } from "../types/fabric";
-class Canvas {
+import CanvasState from "./CanvasState";
+import { DEFAULT_COLOR, DEFAULT_WIDTH } from "./util/constant";
+class Canvas extends CanvasState {
 	private canvas: HistoryCanvas;
 	private resorceCanvas: HTMLCanvasElement;
-	private selected: fabric.Object[] | null = null;
 
 	constructor(canvas: HTMLCanvasElement) {
+		super();
 		const target: HTMLCanvasElement = canvas;
 		this.resorceCanvas = target;
 		this.canvas = <HistoryCanvas>new fabric.Canvas(target);
-
 		this.selectedEvent();
 		this.addRect = this.addRect.bind(this);
 	}
 
-	toInitSet() {
-		this.canvas.isDrawingMode = false;
-		this.selected = null;
+	didStateUpdate(nextState: ICanvasState) {
+		console.log("didupdate", nextState);
+		if (this.canvas && this.canvas.isDrawingMode) {
+			this.canvas.freeDrawingBrush.color = nextState.selectedColor;
+			this.canvas.freeDrawingBrush.width = nextState.brushWidth;
+		}
 	}
 
 	selectedEvent() {
@@ -46,11 +51,8 @@ class Canvas {
 		this.canvas.add(rect);
 	}
 
-	drwaingModeOn(color = "#000", width = 30) {
-		this.toInitSet();
+	drwaingModeOn() {
 		this.canvas.isDrawingMode = true;
-		this.canvas.freeDrawingBrush.color = color;
-		this.canvas.freeDrawingBrush.width = width;
 	}
 
 	drwaingModeOff() {
@@ -62,11 +64,10 @@ class Canvas {
 	}
 
 	getSelected() {
-		return this.selected;
+		return this.state.selected;
 	}
 
 	addImage(img: HTMLImageElement) {
-		console.log("as");
 		const image = new fabric.Image(img, {
 			width: img.width,
 			height: img.height,

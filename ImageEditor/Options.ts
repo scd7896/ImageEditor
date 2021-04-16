@@ -1,30 +1,21 @@
 import Canvas from "./Canvas";
-import OptionState from "./OptionState";
-
-class Options extends OptionState {
+class Options {
 	private canvas: Canvas;
 
 	constructor(option, canvas: Canvas) {
-		super();
 		this.canvas = canvas;
 	}
 
-	optionInitSet() {
-		this.canvas.toInitSet();
-		this.mode = null;
-	}
-
 	rectClick() {
-		this.optionInitSet();
-		this.canvas.addRect(this.selectedColor);
+		this.canvas.addRect();
 	}
 
 	clickPen() {
-		if (this.mode !== "pen") {
-			this.mode = "pen";
-			this.canvas.drwaingModeOn(this.selectedColor, this.selectedWidth);
+		if (this.canvas.state.mode !== "pen") {
+			this.canvas.setState({ mode: "pen" });
+			this.canvas.drwaingModeOn();
 		} else {
-			this.mode = null;
+			this.canvas.setState({ mode: "pen" });
 			this.canvas.drwaingModeOff();
 		}
 	}
@@ -41,10 +32,12 @@ class Options extends OptionState {
 				}
 			});
 		}
-		if (this.mode === "pen") {
-			this.canvas.drwaingModeOn(e.target.value);
+		if (this.canvas.state.mode === "pen") {
+			this.canvas.drwaingModeOn();
 		}
-		this.selectedColor = e.target.value;
+		this.canvas.setState({
+			selectedColor: e.target.value,
+		});
 	}
 
 	undoClick() {

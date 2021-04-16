@@ -63,7 +63,16 @@ class ImageEditor {
 		}
 	};
 
-	notCtrlKeyEvent(key: string) {}
+	notCtrlKeyEvent(key: string) {
+		switch (key) {
+			case "[":
+				this.canvas.brushWidthDown();
+				break;
+			case "]":
+				this.canvas.brushWidthUp();
+				break;
+		}
+	}
 
 	ctrlKeyEvent(key: string, shiftKey: boolean) {
 		switch (key) {
@@ -74,13 +83,6 @@ class ImageEditor {
 				} else {
 					this.canvas.undo();
 				}
-				break;
-
-			case "[":
-				this.options.brushWidthDown();
-				break;
-			case "]":
-				this.options.brushWidthUp();
 				break;
 		}
 	}
