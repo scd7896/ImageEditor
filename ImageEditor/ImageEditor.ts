@@ -71,6 +71,10 @@ class ImageEditor {
 			case "]":
 				this.canvas.brushWidthUp();
 				break;
+			case "d":
+			case "D":
+				this.options.clickPen();
+				break;
 		}
 	}
 

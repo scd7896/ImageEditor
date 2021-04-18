@@ -15,7 +15,7 @@ class Options {
 			this.canvas.setState({ mode: "pen" });
 			this.canvas.drwaingModeOn();
 		} else {
-			this.canvas.setState({ mode: "pen" });
+			this.canvas.setState({ mode: "normal" });
 			this.canvas.drwaingModeOff();
 		}
 	}
