@@ -60,4 +60,9 @@ export default class ToolButtons {
 		const button = this.createButton("사각형");
 		button.addEventListener("click", this.option.rectClick.bind(this.option));
 	}
+
+	exports() {
+		const button = this.createButton("내보내기");
+		button.addEventListener("click", this.option.exportsClick.bind(this.option));
+	}
 }

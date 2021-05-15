@@ -50,6 +50,14 @@ class Options {
 		this.canvas.redo();
 	}
 
+	exportsClick() {
+		const json = this.canvas.getJson();
+		const blob = this.canvas.getImage();
+		if (this.option.events.onExports) {
+			this.option.events.onExports({ json, blob });
+		}
+	}
+
 	downLoadClick() {
 		const blob = this.canvas.getImage();
 		if (this.option.events.onDownLoad) {

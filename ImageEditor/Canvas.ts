@@ -63,6 +63,10 @@ class Canvas extends CanvasState {
 		return canvasImageToFileConverter(this.resorceCanvas);
 	}
 
+	getJson() {
+		return this.canvas.toJSON();
+	}
+
 	getSelected() {
 		return this.state.selected;
 	}
