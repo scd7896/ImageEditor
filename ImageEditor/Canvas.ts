@@ -97,6 +97,14 @@ class Canvas extends CanvasState {
 		this.canvas.redo();
 	}
 
+	resetCanvas() {
+		this.canvas.clear();
+	}
+
+	loadJsonCanvas(json, callback) {
+		this.canvas = this.canvas.loadFromJSON(json, callback) as HistoryCanvas;
+	}
+
 	get undoHistoryLength() {
 		return this.canvas.historyUndo.length;
 	}

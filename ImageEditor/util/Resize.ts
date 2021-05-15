@@ -1,13 +1,12 @@
-function getResizeWidthHeight({ width, height }: HTMLImageElement) {
-	const MAX_SIZE = 100;
+function getResizeWidthHeight({ width, height }: HTMLImageElement, maxSize: number) {
 	let resizeWidth;
 	let resizeHeight;
 	if (width < height) {
-		resizeHeight = MAX_SIZE;
-		resizeWidth = (width * MAX_SIZE) / height;
+		resizeHeight = maxSize;
+		resizeWidth = (width * maxSize) / height;
 	} else {
-		resizeWidth = MAX_SIZE;
-		resizeHeight = (height * MAX_SIZE) / width;
+		resizeWidth = maxSize;
+		resizeHeight = (height * maxSize) / width;
 	}
 	return {
 		width: resizeWidth,
@@ -29,9 +28,9 @@ export function canvasImageToFileConverter(canvas: HTMLCanvasElement) {
 	return tmpThumbFile;
 }
 
-export function getResizeImage(_IMG: HTMLImageElement) {
+export function getResizeImage(_IMG: HTMLImageElement, maxSize = 100) {
 	const canvas = document.createElement("canvas") as HTMLCanvasElement;
-	const { width, height } = getResizeWidthHeight(_IMG);
+	const { width, height } = getResizeWidthHeight(_IMG, maxSize);
 	canvas.width = width;
 	canvas.height = height;
 

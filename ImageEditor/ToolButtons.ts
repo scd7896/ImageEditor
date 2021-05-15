@@ -65,4 +65,14 @@ export default class ToolButtons {
 		const button = this.createButton("내보내기");
 		button.addEventListener("click", this.option.exportsClick.bind(this.option));
 	}
+
+	imageLoad() {
+		const button = this.createButton("이미지 불러오기");
+		button.addEventListener("click", this.option.imageLoadClick.bind(this.option));
+	}
+
+	reset() {
+		const button = this.createButton("리셋하기");
+		button.addEventListener("click", this.option.resetButtonClick.bind(this.option));
+	}
 }

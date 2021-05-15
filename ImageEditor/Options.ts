@@ -58,6 +58,12 @@ class Options {
 		}
 	}
 
+	resetButtonClick() {
+		this.canvas.resetCanvas();
+	}
+
+	imageLoadClick() {}
+
 	downLoadClick() {
 		const blob = this.canvas.getImage();
 		if (this.option.events.onDownLoad) {
@@ -70,6 +76,7 @@ class Options {
 			a.href = url;
 			document.body.appendChild(a);
 			a.click();
+			a.remove();
 			URL.revokeObjectURL(url);
 		}
 	}
