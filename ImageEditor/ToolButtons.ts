@@ -49,6 +49,7 @@ export default class ToolButtons {
 
 	download() {
 		const button = this.createButton("다운로드");
+		button.addEventListener("click", this.option.downLoadClick.bind(this.option));
 	}
 
 	upload() {

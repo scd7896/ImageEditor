@@ -4,6 +4,7 @@ import { ICanvasState } from "../types/CanvasState";
 import { HistoryCanvas } from "../types/fabric";
 import CanvasState from "./CanvasState";
 import { DEFAULT_COLOR, DEFAULT_WIDTH } from "./util/constant";
+import { canvasImageToFileConverter } from "./util/Resize";
 class Canvas extends CanvasState {
 	private canvas: HistoryCanvas;
 	private resorceCanvas: HTMLCanvasElement;
@@ -18,7 +19,6 @@ class Canvas extends CanvasState {
 	}
 
 	didStateUpdate(nextState: ICanvasState) {
-		console.log("didupdate", nextState);
 		if (this.canvas && this.canvas.isDrawingMode) {
 			this.canvas.freeDrawingBrush.color = nextState.selectedColor;
 			this.canvas.freeDrawingBrush.width = nextState.brushWidth;
@@ -60,7 +60,7 @@ class Canvas extends CanvasState {
 	}
 
 	getImage() {
-		return this.resorceCanvas.toDataURL("image/png");
+		return canvasImageToFileConverter(this.resorceCanvas);
 	}
 
 	getSelected() {

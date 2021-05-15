@@ -5,7 +5,7 @@ const init = (id: HTMLCanvasElement | string, options) => {
 };
 
 init("canvas-example", {
-	buttons: ["rect", "color", "pen", "undo", "redo"],
+	buttons: ["rect", "color", "pen", "undo", "redo", "download"],
 	images: [
 		"https://static.lookpin.co.kr/20200416153934-9077/0dbdf15613bb2891fe82b7b9afb9a6aa.jpg?resize=360",
 		"https://pbs.twimg.com/profile_images/921857360502468608/i9dG-27G.jpg",
@@ -14,4 +14,16 @@ init("canvas-example", {
 		"/assets/orange.png",
 		"/assets/face.png",
 	],
+	events: {
+		onDownLoad: (blob: Blob) => {
+			const file = new File([blob], "test.png");
+			const url = URL.createObjectURL(file);
+			const a = document.createElement("a");
+			a.download = file.name;
+			a.href = url;
+			document.body.appendChild(a);
+			a.click();
+			URL.revokeObjectURL(url);
+		},
+	},
 });

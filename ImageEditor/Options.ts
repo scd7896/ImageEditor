@@ -1,9 +1,11 @@
 import Canvas from "./Canvas";
 class Options {
 	private canvas: Canvas;
+	private option: any;
 
 	constructor(option, canvas: Canvas) {
 		this.canvas = canvas;
+		this.option = option;
 	}
 
 	rectClick() {
@@ -46,6 +48,22 @@ class Options {
 
 	redoClick() {
 		this.canvas.redo();
+	}
+
+	downLoadClick() {
+		const blob = this.canvas.getImage();
+		if (this.option.events.onDownLoad) {
+			this.option.events.onDownLoad(blob);
+		} else {
+			const file = new File([blob], "test.png");
+			const url = URL.createObjectURL(file);
+			const a = document.createElement("a");
+			a.download = file.name;
+			a.href = url;
+			document.body.appendChild(a);
+			a.click();
+			URL.revokeObjectURL(url);
+		}
 	}
 }
 
