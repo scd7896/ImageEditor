@@ -2,6 +2,7 @@ import Canvas from "./Canvas";
 import Options from "./Options";
 import Sticker from "./Sticker";
 import ToolButtons from "./ToolButtons";
+import { getResizeImage } from "./util/Resize";
 
 class ImageEditor {
 	private canvas: Canvas;
@@ -16,6 +17,7 @@ class ImageEditor {
 			target = canvas;
 		}
 		const parent = target.parentElement;
+
 		parent.removeChild(target);
 		const wrapperDiv = document.createElement("div");
 		const optionWrapperDiv = document.createElement("div");
@@ -30,6 +32,7 @@ class ImageEditor {
 		parent.appendChild(wrapperDiv);
 
 		this.canvas = new Canvas(target);
+		this.initImageSet(options.baseImage);
 		this.options = new Options(options, this.canvas);
 		this.sticker = new Sticker(options.images, this.canvas);
 		new ToolButtons(this.options, optionWrapperDiv, options.buttons);
@@ -53,6 +56,26 @@ class ImageEditor {
 			});
 		});
 		observer.observe(wrapperDiv.parentNode, config);
+	}
+
+	initImageSet(imageUrl: string) {
+		const image = document.createElement("img");
+		image.width = this.canvas.width;
+		image.height = this.canvas.height;
+		image.src = imageUrl;
+		image.onload = () => {
+			const lowSize = image.width < image.height ? image.width : image.height;
+			console.log(lowSize);
+
+			const src = URL.createObjectURL(getResizeImage(image, lowSize).file);
+			const resizeImage = document.createElement("img");
+			resizeImage.src = src;
+			resizeImage.onload = () => {
+				this.canvas.addImage(resizeImage, { selectable: false });
+
+				this.canvas.clearHistory();
+			};
+		};
 	}
 
 	keyEventListner = ({ key, ctrlKey, metaKey, shiftKey }: KeyboardEvent) => {

@@ -71,12 +71,18 @@ class Canvas extends CanvasState {
 		return this.state.selected;
 	}
 
-	addImage(img: HTMLImageElement) {
+	addImage(img: HTMLImageElement, options?: { top?: number; left?: number; selectable?: boolean }) {
+		const center = {
+			left: this.canvas.getCenter().left - img.width / 2,
+			top: this.canvas.getCenter().top - img.height / 2,
+		};
+		const option = options ? { ...center, ...options } : center;
+
 		const image = new fabric.Image(img, {
 			width: img.width,
 			height: img.height,
 			angle: 0,
-			...this.canvas.getCenter(),
+			...option,
 			filters: [
 				new fabric.Image.filters.RemoveColor({
 					color: "#ffffff",
@@ -105,12 +111,24 @@ class Canvas extends CanvasState {
 		this.canvas = this.canvas.loadFromJSON(json, callback) as HistoryCanvas;
 	}
 
+	clearHistory() {
+		this.canvas.clearHistory();
+	}
+
 	get undoHistoryLength() {
 		return this.canvas.historyUndo.length;
 	}
 
 	get redoHistoryLength() {
 		return this.canvas.historyRedo.length;
+	}
+
+	get width() {
+		return this.canvas.width;
+	}
+
+	get height() {
+		return this.canvas.height;
 	}
 }
 
