@@ -3,7 +3,6 @@ import "fabric-history";
 import { ICanvasState } from "../types/CanvasState";
 import { HistoryCanvas } from "../types/fabric";
 import CanvasState from "./CanvasState";
-import { DEFAULT_COLOR, DEFAULT_WIDTH } from "./util/constant";
 import { canvasImageToFileConverter } from "./util/Resize";
 class Canvas extends CanvasState {
 	private canvas: HistoryCanvas;
@@ -27,12 +26,7 @@ class Canvas extends CanvasState {
 
 	selectedEvent() {
 		function handleSelect(obj: any) {
-			console.log(obj.target);
-			if (obj.target._objects) {
-				this.selected = obj.target._objects;
-			} else {
-				this.selected = [obj.target];
-			}
+			this.setState({ ...this.state, selected: obj.selected });
 		}
 
 		this.canvas.on("selection:updated", handleSelect.bind(this));
@@ -51,6 +45,12 @@ class Canvas extends CanvasState {
 		this.canvas.add(rect);
 	}
 
+	deleteSelected() {
+		if (this.getSelected()) {
+			this.canvas.remove(...this.getSelected());
+		}
+	}
+
 	drwaingModeOn() {
 		this.canvas.isDrawingMode = true;
 	}
@@ -65,10 +65,6 @@ class Canvas extends CanvasState {
 
 	getJson() {
 		return this.canvas.toJSON();
-	}
-
-	getSelected() {
-		return this.state.selected;
 	}
 
 	addImage(img: HTMLImageElement, options?: { top?: number; left?: number; selectable?: boolean }) {
@@ -95,7 +91,6 @@ class Canvas extends CanvasState {
 	}
 
 	undo() {
-		console.log(this.canvas);
 		this.canvas.undo();
 	}
 
@@ -129,6 +124,10 @@ class Canvas extends CanvasState {
 
 	get height() {
 		return this.canvas.height;
+	}
+
+	getSelected() {
+		return this.state.selected;
 	}
 }
 

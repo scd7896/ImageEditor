@@ -65,8 +65,6 @@ class ImageEditor {
 		image.src = imageUrl;
 		image.onload = () => {
 			const lowSize = image.width < image.height ? image.width : image.height;
-			console.log(lowSize);
-
 			const src = URL.createObjectURL(getResizeImage(image, lowSize).file);
 			const resizeImage = document.createElement("img");
 			resizeImage.src = src;
@@ -97,6 +95,10 @@ class ImageEditor {
 			case "d":
 			case "D":
 				this.options.clickPen();
+				break;
+			case "Backspace":
+			case "Delete":
+				this.canvas.deleteSelected();
 				break;
 		}
 	}
