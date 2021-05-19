@@ -18,8 +18,8 @@ class Layer {
 		let target = e.target;
 		let action = "";
 		while (target) {
-			if (target.dataset.action) action = target.dataset.action;
-			if (target.dataset.key) break;
+			if (target.dataset?.action) action = target.dataset.action;
+			if (target.dataset?.key) break;
 			target = target.parentNode;
 		}
 		if (target) {
