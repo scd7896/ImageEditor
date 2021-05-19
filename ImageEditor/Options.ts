@@ -66,18 +66,10 @@ class Options {
 
 	downLoadClick() {
 		const blob = this.canvas.getImage();
-		if (this.option.events.onDownLoad) {
+		if (this.option.events?.onDownLoad) {
 			this.option.events.onDownLoad(blob);
 		} else {
-			const file = new File([blob], "test.png");
-			const url = URL.createObjectURL(file);
-			const a = document.createElement("a");
-			a.download = file.name;
-			a.href = url;
-			document.body.appendChild(a);
-			a.click();
-			a.remove();
-			URL.revokeObjectURL(url);
+			this.canvas.downloadImage();
 		}
 	}
 }

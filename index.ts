@@ -15,16 +15,4 @@ init("canvas-example", {
 		"/assets/orange.png",
 		"/assets/face.png",
 	],
-	events: {
-		onDownLoad: (blob: Blob) => {
-			const file = new File([blob], "test.png");
-			const url = URL.createObjectURL(file);
-			const a = document.createElement("a");
-			a.download = file.name;
-			a.href = url;
-			document.body.appendChild(a);
-			a.click();
-			URL.revokeObjectURL(url);
-		},
-	},
 });

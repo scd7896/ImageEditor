@@ -59,8 +59,17 @@ class Canvas extends CanvasState {
 		this.canvas.isDrawingMode = false;
 	}
 
+	downloadImage() {
+		const a = document.createElement("a");
+		a.href = this.resorceCanvas.toDataURL("image/jpeg");
+		a.download = "test.jpeg";
+		document.body.appendChild(a);
+		a.target = "blank";
+		a.click();
+	}
+
 	getImage() {
-		return canvasImageToFileConverter(this.resorceCanvas);
+		return canvasImageToFileConverter(this.resorceCanvas, "jpeg");
 	}
 
 	getJson() {

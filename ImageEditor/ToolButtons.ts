@@ -26,11 +26,18 @@ export default class ToolButtons {
 
 	color() {
 		const input = document.createElement("input");
-		const button = this.createButton("컬러선택");
+		const button = this.createButton("");
 		input.style.display = "none";
 		input.type = "color";
+		input.defaultValue = "#000000";
+		button.style.background = "#000000";
+		button.style.width = "16px";
+		button.style.height = "16px";
 		button.parentElement.appendChild(input);
-		input.addEventListener("change", this.option.colorChange.bind(this.option));
+		input.addEventListener("change", (e: any) => {
+			this.option.colorChange.call(this.option, e);
+			button.style.background = e.target.value;
+		});
 
 		button.addEventListener("click", () => {
 			input.click();
