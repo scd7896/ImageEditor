@@ -67,7 +67,8 @@ class Canvas extends CanvasState {
 	downloadImage() {
 		const a = document.createElement("a");
 		a.href = this.resorceCanvas.toDataURL("image/jpeg");
-		a.download = "test.jpeg";
+		const name = window.prompt("파일 명을 적어주세요 (확장자 제외)");
+		a.download = `${name}.jpeg`;
 		document.body.appendChild(a);
 		a.target = "blank";
 		a.click();

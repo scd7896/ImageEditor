@@ -66,8 +66,8 @@ class ImageEditor {
 		image.height = this.canvas.height;
 		image.src = imageUrl;
 		image.onload = () => {
-			const lowSize = image.width < image.height ? image.width : image.height;
-			const src = URL.createObjectURL(getResizeImage(image, lowSize).file);
+			const maxSize = image.width < image.height ? image.height : image.width;
+			const src = URL.createObjectURL(getResizeImage(image, maxSize).file);
 			const resizeImage = document.createElement("img");
 			resizeImage.src = src;
 			resizeImage.onload = () => {
