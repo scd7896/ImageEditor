@@ -1,5 +1,6 @@
 export interface ICanvasState {
-	selectedColor?: string;
+	selectedFillColor?: string;
+	selectedStrokeColoe?: string;
 	selectedWidth?: number;
 	mode?: string;
 	brushWidth?: number;

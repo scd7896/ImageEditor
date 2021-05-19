@@ -38,7 +38,7 @@ class Options {
 			this.canvas.drwaingModeOn();
 		}
 		this.canvas.setState({
-			selectedColor: e.target.value,
+			selectedFillColor: e.target.value,
 		});
 	}
 

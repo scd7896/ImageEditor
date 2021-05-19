@@ -19,7 +19,7 @@ class Canvas extends CanvasState {
 
 	didStateUpdate(nextState: ICanvasState) {
 		if (this.canvas && this.canvas.isDrawingMode) {
-			this.canvas.freeDrawingBrush.color = nextState.selectedColor;
+			this.canvas.freeDrawingBrush.color = nextState.selectedFillColor;
 			this.canvas.freeDrawingBrush.width = nextState.brushWidth;
 		}
 	}
@@ -33,13 +33,13 @@ class Canvas extends CanvasState {
 		this.canvas.on("selection:created", handleSelect.bind(this));
 	}
 
-	addRect(color = "#000") {
+	addRect() {
 		const rect = new fabric.Rect({
 			width: 50,
 			height: 50,
 			...this.canvas.getCenter(),
-			backgroundColor: color,
-			fill: color,
+			stroke: this.state.selectedStrokeColoe,
+			fill: this.state.selectedFillColor,
 		});
 
 		this.canvas.add(rect);
