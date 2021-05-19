@@ -16,14 +16,20 @@ class Layer {
 
 	clickEventListener(e) {
 		let target = e.target;
+		let action = "";
 		while (target) {
+			if (target.dataset.action) action = target.dataset.action;
 			if (target.dataset.key) break;
 			target = target.parentNode;
 		}
 		if (target) {
 			const key = target.dataset.key;
 			const object = this.itemList[parseInt(key, 10)];
-			this.canvas.setActiveObject(object);
+			if (action === "delete") {
+				this.canvas.remove(object);
+			} else {
+				this.canvas.setActiveObject(object);
+			}
 		}
 	}
 
@@ -43,6 +49,12 @@ class Layer {
 			const li = document.createElement("li");
 			li.textContent = index.toString();
 			li.dataset.key = index.toString();
+			if (index > 0) {
+				const button = document.createElement("button");
+				button.textContent = "삭제";
+				button.dataset.action = "delete";
+				li.appendChild(button);
+			}
 			return li;
 		});
 		items.forEach((val) => this.listElement.appendChild(val));

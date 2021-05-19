@@ -129,6 +129,10 @@ class Canvas extends CanvasState {
 		this.canvas.on(event, handler);
 	}
 
+	remove(object) {
+		this.canvas.remove(object);
+	}
+
 	setActiveObject(object) {
 		this.canvas.getObjects().forEach((obj, i) => {
 			if (obj === object) {
