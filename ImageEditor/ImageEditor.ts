@@ -1,4 +1,5 @@
 import Canvas from "./Canvas";
+import Layer from "./Layer";
 import Options from "./Options";
 import Sticker from "./Sticker";
 import ToolButtons from "./ToolButtons";
@@ -32,6 +33,7 @@ class ImageEditor {
 		parent.appendChild(wrapperDiv);
 
 		this.canvas = new Canvas(target);
+		new Layer(wrapperDiv, this.canvas);
 		this.initImageSet(options.baseImage);
 		this.options = new Options(options, this.canvas);
 		this.sticker = new Sticker(options.images, this.canvas);

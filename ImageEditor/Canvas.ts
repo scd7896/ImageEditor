@@ -11,10 +11,13 @@ class Canvas extends CanvasState {
 	constructor(canvas: HTMLCanvasElement) {
 		super();
 		const target: HTMLCanvasElement = canvas;
+		target.style.border = "1px solid black";
 		this.resorceCanvas = target;
 		this.canvas = <HistoryCanvas>new fabric.Canvas(target);
 		this.selectedEvent();
+
 		this.addRect = this.addRect.bind(this);
+		this.setActiveObject = this.setActiveObject.bind(this);
 	}
 
 	didStateUpdate(nextState: ICanvasState) {
@@ -26,6 +29,7 @@ class Canvas extends CanvasState {
 
 	selectedEvent() {
 		function handleSelect(obj: any) {
+			console.log(obj);
 			this.setState({ ...this.state, selected: obj.selected });
 		}
 
@@ -43,6 +47,7 @@ class Canvas extends CanvasState {
 		});
 
 		this.canvas.add(rect);
+		return rect;
 	}
 
 	deleteSelected() {
@@ -97,6 +102,7 @@ class Canvas extends CanvasState {
 		});
 
 		this.canvas.add(image);
+		return image;
 	}
 
 	undo() {
@@ -117,6 +123,16 @@ class Canvas extends CanvasState {
 
 	clearHistory() {
 		this.canvas.clearHistory();
+	}
+
+	on(event, handler) {
+		this.canvas.on(event, handler);
+	}
+
+	setActiveObject(object) {
+		this.canvas.setActiveObject(object);
+		const rect = this.addRect();
+		this.canvas.remove(rect);
 	}
 
 	get undoHistoryLength() {
