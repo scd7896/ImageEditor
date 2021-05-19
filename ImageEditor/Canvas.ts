@@ -29,7 +29,7 @@ class Canvas extends CanvasState {
 
 	selectedEvent() {
 		function handleSelect(obj: any) {
-			console.log(obj);
+			obj.selected.forEach((o) => this.canvas.bringForward(o));
 			this.setState({ ...this.state, selected: obj.selected });
 		}
 
@@ -130,7 +130,12 @@ class Canvas extends CanvasState {
 	}
 
 	setActiveObject(object) {
-		this.canvas.setActiveObject(object);
+		this.canvas.getObjects().forEach((obj, i) => {
+			if (obj === object) {
+				if (i !== 0) this.canvas.setActiveObject(object);
+			}
+		});
+
 		const rect = this.addRect();
 		this.canvas.remove(rect);
 	}

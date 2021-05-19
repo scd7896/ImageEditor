@@ -33,7 +33,6 @@ class Layer {
 	}
 
 	addEvent(e) {
-		console.log(e);
 		this.itemList.push(e.target);
 		this.render();
 	}

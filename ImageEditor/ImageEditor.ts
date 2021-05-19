@@ -33,8 +33,8 @@ class ImageEditor {
 		parent.appendChild(wrapperDiv);
 
 		this.canvas = new Canvas(target);
-		new Layer(wrapperDiv, this.canvas);
 		this.initImageSet(options.baseImage);
+		new Layer(wrapperDiv, this.canvas);
 		this.options = new Options(options, this.canvas);
 		this.sticker = new Sticker(options.images, this.canvas);
 		new ToolButtons(this.options, optionWrapperDiv, options.buttons);
@@ -72,7 +72,6 @@ class ImageEditor {
 			resizeImage.src = src;
 			resizeImage.onload = () => {
 				this.canvas.addImage(resizeImage, { selectable: false });
-
 				this.canvas.clearHistory();
 			};
 		};
