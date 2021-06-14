@@ -1,5 +1,4 @@
 import Canvas from "./Canvas";
-import Layer from "./Layer";
 import Options from "./Options";
 import Sticker from "./Sticker";
 import ToolButtons from "./ToolButtons";
@@ -9,6 +8,7 @@ class ImageEditor {
 	private canvas: Canvas;
 	private options: Options;
 	private sticker: Sticker;
+	private target: HTMLCanvasElement;
 
 	constructor(canvas: string | HTMLCanvasElement, options) {
 		let target: HTMLCanvasElement;
@@ -18,6 +18,7 @@ class ImageEditor {
 			target = canvas;
 		}
 		const parent = target.parentElement;
+		this.target = target;
 
 		parent.removeChild(target);
 		const wrapperDiv = document.createElement("div");
@@ -25,16 +26,16 @@ class ImageEditor {
 		const stickerWrapperDiv = document.createElement("div");
 
 		wrapperDiv.classList.add("wrapper");
+		wrapperDiv.style.width = target.width + "px";
+		wrapperDiv.style.height = target.height + "px";
 		optionWrapperDiv.classList.add("option-wrapper");
 		wrapperDiv.appendChild(target);
 		wrapperDiv.appendChild(optionWrapperDiv);
 		wrapperDiv.appendChild(stickerWrapperDiv);
-
 		parent.appendChild(wrapperDiv);
 
-		this.canvas = new Canvas(target);
 		this.initImageSet(options.baseImage);
-		new Layer(wrapperDiv, this.canvas);
+		this.canvas = new Canvas(this.target);
 		this.options = new Options(options, this.canvas);
 		this.sticker = new Sticker(options.images, this.canvas);
 		new ToolButtons(this.options, optionWrapperDiv, options.buttons);
@@ -42,79 +43,29 @@ class ImageEditor {
 		this.sticker.imageList.map((img) => {
 			stickerWrapperDiv.appendChild(img);
 		});
-
-		window.addEventListener("keydown", this.keyEventListner);
-		const config = {
-			childList: true,
-		};
-		const observer = new MutationObserver((mutationsList, observer) => {
-			mutationsList.map((node) => {
-				node.removedNodes.forEach((removeNode) => {
-					if (removeNode === wrapperDiv) {
-						observer.disconnect();
-						window.removeEventListener("keydown", this.keyEventListner);
-					}
-				});
-			});
-		});
-		observer.observe(wrapperDiv.parentNode, config);
 	}
 
 	initImageSet(imageUrl: string) {
 		const image = document.createElement("img");
-		image.width = this.canvas.width;
-		image.height = this.canvas.height;
 		image.src = imageUrl;
 		image.onload = () => {
-			const maxSize = image.width < image.height ? image.height : image.width;
-			const src = URL.createObjectURL(getResizeImage(image, maxSize).file);
+			const imageWidth = image.width;
+			const imageHeight = image.height;
+
+			const src = URL.createObjectURL(
+				getResizeImage(image, imageWidth > imageHeight ? this.canvas.width : this.canvas.height).file
+			);
 			const resizeImage = document.createElement("img");
 			resizeImage.src = src;
 			resizeImage.onload = () => {
+				this.target.width = resizeImage.width;
+				this.target.height = resizeImage.height;
 				this.canvas.addImage(resizeImage, { selectable: false });
+				this.canvas.width = resizeImage.width;
+				this.canvas.height = resizeImage.height;
 				this.canvas.clearHistory();
 			};
 		};
-	}
-
-	keyEventListner = ({ key, ctrlKey, metaKey, shiftKey }: KeyboardEvent) => {
-		if (ctrlKey || metaKey) {
-			this.ctrlKeyEvent(key, shiftKey);
-		} else {
-			this.notCtrlKeyEvent(key);
-		}
-	};
-
-	notCtrlKeyEvent(key: string) {
-		switch (key) {
-			case "[":
-				this.canvas.brushWidthDown();
-				break;
-			case "]":
-				this.canvas.brushWidthUp();
-				break;
-			case "d":
-			case "D":
-				this.options.clickPen();
-				break;
-			case "Backspace":
-			case "Delete":
-				this.canvas.deleteSelected();
-				break;
-		}
-	}
-
-	ctrlKeyEvent(key: string, shiftKey: boolean) {
-		switch (key) {
-			case "z":
-			case "Z":
-				if (shiftKey) {
-					this.canvas.redo();
-				} else {
-					this.canvas.undo();
-				}
-				break;
-		}
 	}
 }
 

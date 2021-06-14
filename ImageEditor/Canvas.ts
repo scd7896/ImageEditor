@@ -161,6 +161,14 @@ class Canvas extends CanvasState {
 		return this.canvas.height;
 	}
 
+	set width(width: number) {
+		this.canvas.width = width;
+	}
+
+	set height(height: number) {
+		this.canvas.height = height;
+	}
+
 	getSelected() {
 		return this.state.selected;
 	}
