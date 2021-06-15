@@ -9,7 +9,9 @@ class ImageEditor {
 	private options: Options;
 	private sticker: Sticker;
 	private wrapper: HTMLDivElement;
+	private dummyDiv: HTMLDivElement;
 	private imgUrl: string;
+	private cropPoint: { top: number; left: number };
 
 	constructor(wrapper: string | HTMLDivElement, options) {
 		let target: HTMLDivElement;
@@ -32,8 +34,14 @@ class ImageEditor {
 	toCenterScroll() {
 		const moveToScrollLeft = this.wrapper.clientWidth / 4;
 		const moveToScrollTop = this.wrapper.clientHeight / 4;
+		this.wrapper.onscroll = () => {
+			this.cropPoint.left = this.wrapper.scrollLeft;
+			this.cropPoint.top = this.wrapper.scrollTop;
+		};
 		this.wrapper.scroll(moveToScrollLeft, moveToScrollTop);
 	}
+
+	setOptions() {}
 
 	async initImageSet(image: HTMLImageElement) {
 		const { width, height } = getResizeFillWidthHeight(image, this.wrapper.clientWidth);
@@ -49,6 +57,7 @@ class ImageEditor {
 			canvas.height = height;
 			dummyDiv.style.width = canvas.width + "px";
 			dummyDiv.style.height = canvas.height + "px";
+			this.dummyDiv = dummyDiv;
 			canvas.classList.add("image-canvas");
 			canvas.getContext("2d").drawImage(resizeImg, 0, 0);
 			this.wrapper.appendChild(dummyDiv);
@@ -57,6 +66,7 @@ class ImageEditor {
 			this.canvas.addImage(resizeImg, { selectable: false });
 			this.canvas.clearHistory();
 			this.toCenterScroll();
+			this.setOptions();
 		};
 	}
 }
