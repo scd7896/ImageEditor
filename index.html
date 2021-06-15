@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+	<link href="/css/index.css" rel="stylesheet" />
 	<style>
 		body {
 			margin: 0;
@@ -13,13 +14,10 @@
 </head>
 <body>
 	<div>
-		<canvas id="canvas-example"></canvas>
+		<div id="canvas-example">
+		</div>
 	</div>
-	<script>
-		const canvas = document.getElementById("canvas-example");
-		canvas.width = window.innerWidth - 2;
-		canvas.height = canvas.width * 1.1;
-	</script>
+	
 	<script src="/dist/image-editor.min.js"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@ class Canvas extends CanvasState {
 		target.style.border = "1px solid black";
 		this.resorceCanvas = target;
 		this.canvas = <HistoryCanvas>new fabric.Canvas(target);
+
 		this.selectedEvent();
 
 		this.addRect = this.addRect.bind(this);

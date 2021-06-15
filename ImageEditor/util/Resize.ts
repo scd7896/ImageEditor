@@ -1,4 +1,4 @@
-function getResizeWidthHeight({ width, height }: HTMLImageElement, maxSize: number) {
+export function getResizeWidthHeight({ width, height }: HTMLImageElement, maxSize: number) {
 	let resizeWidth;
 	let resizeHeight;
 	if (width < height) {
@@ -7,6 +7,22 @@ function getResizeWidthHeight({ width, height }: HTMLImageElement, maxSize: numb
 	} else {
 		resizeWidth = maxSize;
 		resizeHeight = (height * maxSize) / width;
+	}
+	return {
+		width: resizeWidth,
+		height: resizeHeight,
+	};
+}
+
+export function getResizeFillWidthHeight({ width, height }, minSize: number) {
+	let resizeWidth;
+	let resizeHeight;
+	if (width > height) {
+		resizeHeight = minSize;
+		resizeWidth = (width * minSize) / height;
+	} else {
+		resizeWidth = minSize;
+		resizeHeight = (height * minSize) / width;
 	}
 	return {
 		width: resizeWidth,

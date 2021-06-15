@@ -1,6 +1,6 @@
 import ImageEditor from "./ImageEditor/ImageEditor";
 
-const init = (id: HTMLCanvasElement | string, options) => {
+const init = (id: HTMLDivElement | string, options) => {
 	const Editor = new ImageEditor(id, options);
 };
 
