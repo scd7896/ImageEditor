@@ -29,6 +29,12 @@ class ImageEditor {
 		};
 	}
 
+	toCenterScroll() {
+		const moveToScrollLeft = this.wrapper.clientWidth / 4;
+		const moveToScrollTop = this.wrapper.clientHeight / 4;
+		this.wrapper.scroll(moveToScrollLeft, moveToScrollTop);
+	}
+
 	async initImageSet(image: HTMLImageElement) {
 		const { width, height } = getResizeFillWidthHeight(image, this.wrapper.clientWidth);
 		const resizeImg = new Image();
@@ -50,6 +56,7 @@ class ImageEditor {
 			this.canvas = new Canvas(canvas);
 			this.canvas.addImage(resizeImg, { selectable: false });
 			this.canvas.clearHistory();
+			this.toCenterScroll();
 		};
 	}
 }
