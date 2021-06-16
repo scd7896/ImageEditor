@@ -6,23 +6,31 @@ import { getResizeFillWidthHeight } from "./util/Resize";
 
 class ImageEditor {
 	private canvas: Canvas;
-	private options: Options;
+	private option: any;
 	private sticker: Sticker;
 	private wrapper: HTMLDivElement;
+	private canvasWrapper: HTMLDivElement;
 	private dummyDiv: HTMLDivElement;
 	private imgUrl: string;
 	private cropPoint: { top: number; left: number };
 
 	constructor(wrapper: string | HTMLDivElement, options) {
 		let target: HTMLDivElement;
+		this.option = options;
 		if (typeof wrapper === "string") {
 			target = document.querySelector(`#${wrapper}`) as HTMLDivElement;
 		} else {
 			target = wrapper;
 		}
+		target.classList.add("wrapper");
 		this.wrapper = target;
-		this.wrapper.style.height = this.wrapper.clientWidth + "px";
-		this.wrapper.classList.add("wrapper");
+
+		const canvasWrapper = document.createElement("div");
+		canvasWrapper.classList.add("canvas-wrapper");
+		canvasWrapper.style.height = this.wrapper.clientWidth + "px";
+		this.canvasWrapper = canvasWrapper;
+
+		target.appendChild(canvasWrapper);
 		const img = new Image();
 		img.src = options.baseImage;
 		this.imgUrl = options.baseImage;
@@ -32,16 +40,21 @@ class ImageEditor {
 	}
 
 	toCenterScroll() {
-		const moveToScrollLeft = this.wrapper.clientWidth / 4;
-		const moveToScrollTop = this.wrapper.clientHeight / 4;
-		this.wrapper.onscroll = () => {
-			this.cropPoint.left = this.wrapper.scrollLeft;
-			this.cropPoint.top = this.wrapper.scrollTop;
+		const moveToScrollLeft = this.canvasWrapper.clientWidth / 4;
+		const moveToScrollTop = this.canvasWrapper.clientHeight / 4;
+		this.canvasWrapper.onscroll = () => {
+			this.cropPoint.left = this.canvasWrapper.scrollLeft;
+			this.cropPoint.top = this.canvasWrapper.scrollTop;
 		};
-		this.wrapper.scroll(moveToScrollLeft, moveToScrollTop);
+		this.canvasWrapper.scroll(moveToScrollLeft, moveToScrollTop);
 	}
 
-	setOptions() {}
+	setOptions() {
+		const optionWrapper = document.createElement("div");
+		const options = new Options(this.option, this.canvas);
+		new ToolButtons(options, optionWrapper, this.option.buttons);
+		this.wrapper.appendChild(optionWrapper);
+	}
 
 	async initImageSet(image: HTMLImageElement) {
 		const { width, height } = getResizeFillWidthHeight(image, this.wrapper.clientWidth);
@@ -52,16 +65,18 @@ class ImageEditor {
 		resizeImg.onload = () => {
 			const canvas = document.createElement("canvas");
 			const dummyDiv = document.createElement("div");
+
 			dummyDiv.classList.add("dummy");
+			canvas.classList.add("image-canvas");
+
 			canvas.width = width;
 			canvas.height = height;
 			dummyDiv.style.width = canvas.width + "px";
 			dummyDiv.style.height = canvas.height + "px";
 			this.dummyDiv = dummyDiv;
-			canvas.classList.add("image-canvas");
-			canvas.getContext("2d").drawImage(resizeImg, 0, 0);
-			this.wrapper.appendChild(dummyDiv);
-			this.wrapper.appendChild(canvas);
+
+			this.canvasWrapper.appendChild(dummyDiv);
+			this.canvasWrapper.appendChild(canvas);
 			this.canvas = new Canvas(canvas);
 			this.canvas.addImage(resizeImg, { selectable: false });
 			this.canvas.clearHistory();
