@@ -4,13 +4,52 @@ import { ICanvasState } from "../types/CanvasState";
 import { HistoryCanvas } from "../types/fabric";
 import CanvasState from "./CanvasState";
 import { canvasImageToFileConverter } from "./util/Resize";
+
+type ScrollPoint = {
+	left: number;
+	top: number;
+};
+
+function downloadURL(href: string) {
+	const a = document.createElement("a");
+	a.href = href;
+	const name = window.prompt("파일 명을 적어주세요 (확장자 제외)");
+	a.download = `${name}.jpeg`;
+	document.body.appendChild(a);
+	a.target = "blank";
+	a.click();
+}
+
+function getImageRatio(width, height) {
+	if (width > height) {
+		return height / width;
+	} else {
+		return width / height;
+	}
+}
+
+function cropImage(canvas: HTMLCanvasElement, iCropLeft, iCropTop) {
+	const minVal = canvas.width < canvas.height ? canvas.width : canvas.height;
+	const ratio = getImageRatio(canvas.width, canvas.height);
+	const imageData = canvas
+		.getContext("2d")
+		.getImageData(canvas.width * (iCropLeft / 100) * ratio, canvas.height * (iCropTop / 100) * ratio, minVal, minVal);
+	const cropCanvas = document.createElement("canvas");
+	cropCanvas.width = imageData.width;
+	cropCanvas.height = imageData.height;
+	cropCanvas.getContext("2d").putImageData(imageData, 0, 0);
+	downloadURL(cropCanvas.toDataURL("image/jpeg"));
+}
+
 class Canvas extends CanvasState {
 	private canvas: HistoryCanvas;
+	private scrollPoint: ScrollPoint;
 	private resorceCanvas: HTMLCanvasElement;
 
-	constructor(canvas: HTMLCanvasElement) {
+	constructor(canvas: HTMLCanvasElement, defaultScroll?: ScrollPoint) {
 		super();
 		const target: HTMLCanvasElement = canvas;
+		this.scrollPoint = defaultScroll;
 		target.style.border = "1px solid black";
 		this.resorceCanvas = target;
 		this.canvas = <HistoryCanvas>new fabric.Canvas(target);
@@ -19,6 +58,10 @@ class Canvas extends CanvasState {
 
 		this.addRect = this.addRect.bind(this);
 		this.setActiveObject = this.setActiveObject.bind(this);
+	}
+
+	setScrollPoint(nextScrollPoint: ScrollPoint) {
+		this.scrollPoint = nextScrollPoint;
 	}
 
 	didStateUpdate(nextState: ICanvasState) {
@@ -66,13 +109,9 @@ class Canvas extends CanvasState {
 	}
 
 	downloadImage() {
-		const a = document.createElement("a");
-		a.href = this.resorceCanvas.toDataURL("image/jpeg");
-		const name = window.prompt("파일 명을 적어주세요 (확장자 제외)");
-		a.download = `${name}.jpeg`;
-		document.body.appendChild(a);
-		a.target = "blank";
-		a.click();
+		const { top, left } = this.scrollPoint;
+
+		cropImage(this.resorceCanvas, left, top);
 	}
 
 	getImage() {

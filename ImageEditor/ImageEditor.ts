@@ -43,8 +43,10 @@ class ImageEditor {
 		const moveToScrollLeft = this.canvasWrapper.clientWidth / 4;
 		const moveToScrollTop = this.canvasWrapper.clientHeight / 4;
 		this.canvasWrapper.onscroll = () => {
-			this.cropPoint.left = this.canvasWrapper.scrollLeft;
-			this.cropPoint.top = this.canvasWrapper.scrollTop;
+			this.canvas.setScrollPoint({
+				left: (this.canvasWrapper.scrollLeft / this.canvasWrapper.clientWidth) * 100,
+				top: (this.canvasWrapper.scrollTop / this.canvasWrapper.clientHeight) * 100,
+			});
 		};
 		this.canvasWrapper.scroll(moveToScrollLeft, moveToScrollTop);
 	}
@@ -61,6 +63,7 @@ class ImageEditor {
 		const resizeImg = new Image();
 		resizeImg.width = width;
 		resizeImg.height = height;
+		console.log(width, height);
 		resizeImg.src = this.imgUrl;
 		resizeImg.onload = () => {
 			const canvas = document.createElement("canvas");
@@ -77,7 +80,10 @@ class ImageEditor {
 
 			this.canvasWrapper.appendChild(dummyDiv);
 			this.canvasWrapper.appendChild(canvas);
-			this.canvas = new Canvas(canvas);
+			this.canvas = new Canvas(canvas, {
+				left: this.canvasWrapper.clientWidth / 4,
+				top: this.canvasWrapper.clientHeight / 4,
+			});
 			this.canvas.addImage(resizeImg, { selectable: false });
 			this.canvas.clearHistory();
 			this.toCenterScroll();
