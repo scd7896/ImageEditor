@@ -10,9 +10,7 @@ class ImageEditor {
 	private sticker: Sticker;
 	private wrapper: HTMLDivElement;
 	private canvasWrapper: HTMLDivElement;
-	private dummyDiv: HTMLDivElement;
 	private imgUrl: string;
-	private cropPoint: { top: number; left: number };
 
 	constructor(wrapper: string | HTMLDivElement, options) {
 		let target: HTMLDivElement;
@@ -30,6 +28,7 @@ class ImageEditor {
 		canvasWrapper.style.height = this.wrapper.clientWidth + "px";
 		this.canvasWrapper = canvasWrapper;
 
+		this.touchEventRegistry();
 		target.appendChild(canvasWrapper);
 		const img = new Image();
 		img.src = options.baseImage;
@@ -37,6 +36,31 @@ class ImageEditor {
 		img.onload = () => {
 			this.initImageSet.call(this, img);
 		};
+	}
+
+	touchEventRegistry() {
+		this.canvasWrapper.ontouchstart = this.start_handler.bind(this);
+		this.canvasWrapper.ontouchmove = this.move_handler.bind(this);
+
+		// this.canvasWrapper.ontouchcancel = end_handler;
+		// this.canvasWrapper.ontouchend = end_handler;
+	}
+
+	move_handler(ev: TouchEvent) {
+		ev.stopImmediatePropagation();
+		ev.preventDefault();
+		// console.log(ev);
+		if (ev.touches.length >= 2) {
+			return false;
+		}
+	}
+
+	start_handler(ev) {
+		ev.preventDefault();
+		console.log(ev);
+		if (ev.targetTouches.length == 2) {
+			return false;
+		}
 	}
 
 	toCenterScroll() {
@@ -67,18 +91,13 @@ class ImageEditor {
 		resizeImg.src = this.imgUrl;
 		resizeImg.onload = () => {
 			const canvas = document.createElement("canvas");
-			const dummyDiv = document.createElement("div");
 
-			dummyDiv.classList.add("dummy");
 			canvas.classList.add("image-canvas");
 
 			canvas.width = width;
 			canvas.height = height;
-			dummyDiv.style.width = canvas.width + "px";
-			dummyDiv.style.height = canvas.height + "px";
-			this.dummyDiv = dummyDiv;
 
-			this.canvasWrapper.appendChild(dummyDiv);
+			// this.canvasWrapper.appendChild(dummyDiv);
 			this.canvasWrapper.appendChild(canvas);
 			this.canvas = new Canvas(canvas, {
 				left: this.canvasWrapper.clientWidth / 4,
