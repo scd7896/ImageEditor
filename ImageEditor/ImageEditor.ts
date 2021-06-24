@@ -3,7 +3,7 @@ import Canvas from "./Canvas";
 import Options from "./Options";
 import Sticker from "./Sticker";
 import ToolButtons from "./ToolButtons";
-import { getResizeFillWidthHeight } from "./util/Resize";
+import { getResizeFillWidthHeight, getResizeImage } from "./util/Resize";
 declare var process: {
 	env: {
 		NODE_ENV: string;
@@ -169,6 +169,7 @@ class ImageEditor {
 		resizeImg.width = width;
 		resizeImg.height = height;
 		resizeImg.src = this.imgUrl;
+
 		resizeImg.onload = () => {
 			const canvas = document.createElement("canvas");
 
@@ -182,10 +183,15 @@ class ImageEditor {
 				left: this.canvasWrapper.clientWidth / 4,
 				top: this.canvasWrapper.clientHeight / 4,
 			});
-			this.canvas.addImage(resizeImg, { selectable: false });
-			this.canvas.clearHistory();
-			this.toCenterScroll();
-			this.setOptions();
+			const { file } = getResizeImage(resizeImg, width > height ? width : height);
+			const initImage = new Image();
+			initImage.src = URL.createObjectURL(file);
+			initImage.onload = () => {
+				this.canvas.addImage(initImage, { selectable: false });
+				this.canvas.clearHistory();
+				this.toCenterScroll();
+				this.setOptions();
+			};
 		};
 	}
 }

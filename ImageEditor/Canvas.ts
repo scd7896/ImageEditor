@@ -147,7 +147,9 @@ class Canvas extends CanvasState {
 	}
 
 	undo() {
-		this.canvas.undo();
+		if (this.undoHistoryLength) {
+			this.canvas.undo();
+		}
 	}
 
 	redo() {
