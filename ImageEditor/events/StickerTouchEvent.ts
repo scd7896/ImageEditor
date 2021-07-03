@@ -14,28 +14,29 @@ class StickerTouchEvents {
 	}
 
 	touchStart(ev: TouchEvent) {
-		const { pageX, pageY } = ev.targetTouches.item(0);
+		const { clientX, clientY } = ev.targetTouches.item(0);
 		const image = ev.targetTouches.item(0).target as HTMLImageElement;
 
 		this.target = document.createElement("img");
 		this.target.style.position = "absolute";
-		this.target.style.top = pageY + "px";
-		this.target.style.left = pageX + "px";
+		this.target.style.top = clientY + "px";
+		this.target.style.left = clientX + "px";
 		this.target.src = image.src;
 
 		this.parent.appendChild(this.target);
 	}
 
 	touchEnd(ev: TouchEvent) {
+		console.log(ev);
 		this.canvas.addImage(this.target);
 		this.parent.removeChild(this.target);
 	}
 
 	touchMove(ev: TouchEvent) {
-		const { pageX, pageY } = ev.targetTouches.item(0);
+		const { clientX, clientY } = ev.targetTouches.item(0);
 		this.target.style.position = "absolute";
-		this.target.style.top = pageY + "px";
-		this.target.style.left = pageX + "px";
+		this.target.style.top = clientY + "px";
+		this.target.style.left = clientX + "px";
 	}
 }
 
