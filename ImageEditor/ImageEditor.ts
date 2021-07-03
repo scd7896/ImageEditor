@@ -1,5 +1,6 @@
 import { Point } from "fabric/fabric-impl";
 import Canvas from "./Canvas";
+import StickerTouchEvents from "./events/StickerTouchEvent";
 import Options from "./Options";
 import Sticker from "./Sticker";
 import ToolButtons from "./ToolButtons";
@@ -74,6 +75,10 @@ class ImageEditor {
 		}
 		target.classList.add("wrapper");
 		this.wrapper = target;
+
+		const headerDiv = document.createElement("div");
+		headerDiv.classList.add("header");
+		this.wrapper.appendChild(headerDiv);
 
 		const canvasWrapper = document.createElement("div");
 		canvasWrapper.classList.add("canvas-wrapper");
@@ -159,6 +164,10 @@ class ImageEditor {
 	setOptions() {
 		const optionWrapper = document.createElement("div");
 		const options = new Options(this.option, this.canvas);
+		const sticker = new Sticker(this.option.images, new StickerTouchEvents(this.canvas, this.wrapper));
+		const div = document.createElement("div");
+		sticker.imageList.map((image) => div.appendChild(image));
+		optionWrapper.appendChild(div);
 		new ToolButtons(options, optionWrapper, this.option.buttons);
 		this.wrapper.appendChild(optionWrapper);
 	}
@@ -183,6 +192,7 @@ class ImageEditor {
 				left: this.canvasWrapper.clientWidth / 4,
 				top: this.canvasWrapper.clientHeight / 4,
 			});
+
 			const { file } = getResizeImage(resizeImg, width > height ? width : height);
 			const initImage = new Image();
 			initImage.src = URL.createObjectURL(file);

@@ -1,9 +1,9 @@
 import Canvas from "./Canvas";
+import StickerTouchEvents from "./events/StickerTouchEvent";
 import { getResizeImage } from "./util/Resize";
-
 export default class Sticker {
 	private images: HTMLImageElement[];
-	constructor(urls: string[], canvas: Canvas) {
+	constructor(urls: string[], touchEvents: StickerTouchEvents) {
 		const images = urls.map((url) => {
 			const img = new Image();
 			const tmpImg = new Image();
@@ -15,11 +15,13 @@ export default class Sticker {
 				tmpImg.height = height;
 
 				tmpImg.src = URL.createObjectURL(file);
+				tmpImg.draggable = true;
 			};
 
-			tmpImg.onclick = () => {
-				canvas.addImage(tmpImg);
-			};
+			tmpImg.ontouchstart = touchEvents.touchStart;
+			tmpImg.ontouchcancel = touchEvents.touchEnd;
+			tmpImg.ontouchend = touchEvents.touchEnd;
+			tmpImg.ontouchmove = touchEvents.touchMove;
 			img.onerror = () => {};
 			img.src = url;
 			return tmpImg;
