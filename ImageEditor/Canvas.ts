@@ -143,10 +143,12 @@ class Canvas extends CanvasState {
 		});
 
 		this.canvas.add(image);
+
 		return image;
 	}
 
 	undo() {
+		console.log(this.canvas.historyUndo);
 		if (this.undoHistoryLength) {
 			this.canvas.undo();
 		}
@@ -157,7 +159,14 @@ class Canvas extends CanvasState {
 	}
 
 	resetCanvas() {
-		this.canvas.clear();
+		let history: string;
+		while (this.canvas.historyUndo.length) {
+			history = this.canvas.historyUndo.pop();
+		}
+		this.canvas._loadHistory(history, "");
+		this.canvas.historyRedo = [];
+		this.canvas.historyUndo = [];
+		this.canvas.historyNextState = history;
 	}
 
 	loadJsonCanvas(json, callback) {
