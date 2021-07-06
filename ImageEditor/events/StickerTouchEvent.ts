@@ -2,11 +2,13 @@ import Canvas from "../Canvas";
 
 class StickerTouchEvents {
 	public target: HTMLImageElement;
-	public parent: HTMLElement;
+	public rootWrapper: HTMLElement;
+	public canvasWrapper: HTMLElement;
 	public canvas: Canvas;
 
-	constructor(canvas: Canvas, parent: HTMLElement) {
-		this.parent = parent;
+	constructor(canvas: Canvas, parent: HTMLElement, canvasWrapper: HTMLElement) {
+		this.rootWrapper = parent;
+		this.canvasWrapper = canvasWrapper;
 		this.canvas = canvas;
 		this.touchStart = this.touchStart.bind(this);
 		this.touchMove = this.touchMove.bind(this);
@@ -23,13 +25,16 @@ class StickerTouchEvents {
 		this.target.style.left = clientX + "px";
 		this.target.src = image.src;
 
-		this.parent.appendChild(this.target);
+		this.rootWrapper.appendChild(this.target);
 	}
 
 	touchEnd(ev: TouchEvent) {
-		console.log(ev);
-		this.canvas.addImage(this.target);
-		this.parent.removeChild(this.target);
+		const touchItem = ev.changedTouches.item(0);
+		const left = touchItem.pageX + this.canvasWrapper.scrollLeft;
+		const top = touchItem.pageY + this.canvasWrapper.scrollTop;
+
+		this.canvas.addImage(this.target, { top, left });
+		this.rootWrapper.removeChild(this.target);
 	}
 
 	touchMove(ev: TouchEvent) {

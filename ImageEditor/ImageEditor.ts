@@ -70,7 +70,10 @@ class ImageEditor {
 	setOptions() {
 		const optionWrapper = document.createElement("div");
 		const options = new Options(this.option, this.canvas);
-		const sticker = new Sticker(this.option.images, new StickerTouchEvents(this.canvas, this.wrapper));
+		const sticker = new Sticker(
+			this.option.images,
+			new StickerTouchEvents(this.canvas, this.wrapper, this.canvasWrapper)
+		);
 		const div = document.createElement("div");
 		sticker.imageList.map((image) => div.appendChild(image));
 		optionWrapper.appendChild(div);
