@@ -5,7 +5,7 @@ const init = (id: HTMLDivElement | string, options) => {
 };
 
 init("canvas-example", {
-	buttons: ["rect", "color", "pen", "undo", "redo", "download", "reset"],
+	buttons: ["rect", "color", "pen", "undo", "redo", "download", "reset", "remove"],
 	baseImage: "/assets/couple.png",
 	images: [
 		"https://static.lookpin.co.kr/20200416153934-9077/0dbdf15613bb2891fe82b7b9afb9a6aa.jpg?resize=360",

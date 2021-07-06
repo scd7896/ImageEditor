@@ -72,6 +72,10 @@ class Options {
 			this.canvas.downloadImage();
 		}
 	}
+
+	deleteClick() {
+		this.canvas.deleteSelected();
+	}
 }
 
 export default Options;

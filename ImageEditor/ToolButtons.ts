@@ -82,4 +82,9 @@ export default class ToolButtons {
 		const button = this.createButton("리셋하기");
 		button.addEventListener("click", this.option.resetButtonClick.bind(this.option));
 	}
+
+	remove() {
+		const button = this.createButton("삭제하기");
+		button.addEventListener("click", this.option.deleteClick.bind(this.option));
+	}
 }
