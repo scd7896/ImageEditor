@@ -30,8 +30,8 @@ class StickerTouchEvents {
 
 	touchEnd(ev: TouchEvent) {
 		const touchItem = ev.changedTouches.item(0);
-		const left = touchItem.pageX + this.canvasWrapper.scrollLeft;
-		const top = touchItem.pageY + this.canvasWrapper.scrollTop;
+		const left = touchItem.clientX + this.canvasWrapper.scrollLeft;
+		const top = touchItem.clientY + this.canvasWrapper.scrollTop - 64;
 
 		this.canvas.addImage(this.target, { top, left });
 		this.rootWrapper.removeChild(this.target);
