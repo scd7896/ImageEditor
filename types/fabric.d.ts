@@ -12,4 +12,5 @@ export class HistoryCanvas extends fabric.Canvas {
 	_historyInit(): void;
 	_loadHistory(history: string, event: string): void;
 	historyNextState: string;
+	toResetHistory(): void;
 }

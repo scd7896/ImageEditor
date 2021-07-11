@@ -1,5 +1,6 @@
 import { fabric } from "fabric";
 import "fabric-history";
+import "./events/fabric-history-extension.js"
 import { ICanvasState } from "../types/CanvasState";
 import { HistoryCanvas } from "../types/fabric";
 import CanvasState from "./CanvasState";
@@ -148,7 +149,6 @@ class Canvas extends CanvasState {
 	}
 
 	undo() {
-		console.log(this.canvas.historyUndo);
 		if (this.undoHistoryLength) {
 			this.canvas.undo();
 		}
@@ -159,14 +159,7 @@ class Canvas extends CanvasState {
 	}
 
 	resetCanvas() {
-		let history: string;
-		while (this.canvas.historyUndo.length) {
-			history = this.canvas.historyUndo.pop();
-		}
-		this.canvas._loadHistory(history, "");
-		this.canvas.historyRedo = [];
-		this.canvas.historyUndo = [];
-		this.canvas.historyNextState = history;
+		this.canvas.toResetHistory();
 	}
 
 	loadJsonCanvas(json, callback) {
