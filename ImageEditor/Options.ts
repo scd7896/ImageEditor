@@ -76,6 +76,18 @@ class Options {
 	deleteClick() {
 		this.canvas.deleteSelected();
 	}
+
+	stickerOn() {
+		this.canvas.setState({
+			showStickerMode: true,
+		});
+	}
+
+	stickerOff() {
+		this.canvas.setState({
+			showStickerMode: false,
+		});
+	}
 }
 
 export default Options;

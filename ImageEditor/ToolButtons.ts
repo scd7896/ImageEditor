@@ -3,7 +3,11 @@ import Options from "./Options";
 export default class ToolButtons {
 	private optionWrapper: HTMLDivElement;
 	private option: Options;
-	constructor(option: Options, optionWrapper: HTMLDivElement, buttons: string[]) {
+	constructor(
+		option: Options,
+		optionWrapper: HTMLDivElement,
+		buttons: string[] = ["rect", "color", "pen", "undo", "redo", "download", "reset", "remove", "sticker"]
+	) {
 		this.optionWrapper = optionWrapper;
 		this.option = option;
 		this.optionWrapper = optionWrapper;
@@ -73,11 +77,6 @@ export default class ToolButtons {
 		button.addEventListener("click", this.option.exportsClick.bind(this.option));
 	}
 
-	imageLoad() {
-		const button = this.createButton("이미지 불러오기");
-		button.addEventListener("click", this.option.imageLoadClick.bind(this.option));
-	}
-
 	reset() {
 		const button = this.createButton("리셋하기");
 		button.addEventListener("click", this.option.resetButtonClick.bind(this.option));
@@ -86,5 +85,10 @@ export default class ToolButtons {
 	remove() {
 		const button = this.createButton("삭제하기");
 		button.addEventListener("click", this.option.deleteClick.bind(this.option));
+	}
+
+	sticker() {
+		const button = this.createButton("스티커");
+		button.addEventListener("click", this.option.stickerOn.bind(this.option));
 	}
 }

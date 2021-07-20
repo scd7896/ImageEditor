@@ -1,4 +1,3 @@
-import Canvas from "./Canvas";
 import StickerTouchEvents from "./events/StickerTouchEvent";
 import { getResizeImage } from "./util/Resize";
 export default class Sticker {
@@ -17,11 +16,7 @@ export default class Sticker {
 				tmpImg.src = URL.createObjectURL(file);
 				tmpImg.draggable = true;
 			};
-
-			tmpImg.ontouchstart = touchEvents.touchStart;
-			tmpImg.ontouchcancel = touchEvents.touchEnd;
-			tmpImg.ontouchend = touchEvents.touchEnd;
-			tmpImg.ontouchmove = touchEvents.touchMove;
+			tmpImg.onclick = touchEvents.clickEvent;
 			img.onerror = () => {};
 			img.src = url;
 			return tmpImg;

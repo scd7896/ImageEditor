@@ -14,6 +14,7 @@ abstract class CanvasState {
 			brushWidth: DEFAULT_WIDTH,
 			mode: "normal",
 			selected: null,
+			showStickerMode: true,
 		});
 	}
 

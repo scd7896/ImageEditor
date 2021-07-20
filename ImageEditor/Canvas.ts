@@ -1,6 +1,6 @@
 import { fabric } from "fabric";
 import "fabric-history";
-import "./events/fabric-history-extension.js"
+import "./events/fabric-history-extension.js";
 import { ICanvasState } from "../types/CanvasState";
 import { HistoryCanvas } from "../types/fabric";
 import CanvasState from "./CanvasState";
@@ -46,14 +46,20 @@ class Canvas extends CanvasState {
 	private canvas: HistoryCanvas;
 	private scrollPoint: ScrollPoint;
 	private resorceCanvas: HTMLCanvasElement;
+	private onStateUpdate: Function;
 
-	constructor(canvas: HTMLCanvasElement, defaultScroll?: ScrollPoint) {
+	constructor(
+		canvas: HTMLCanvasElement,
+		defaultScroll?: ScrollPoint,
+		onStateUpdate?: (nextState: ICanvasState) => void
+	) {
 		super();
 		const target: HTMLCanvasElement = canvas;
 		this.scrollPoint = defaultScroll;
 		target.style.border = "1px solid black";
 		this.resorceCanvas = target;
 		this.canvas = <HistoryCanvas>new fabric.Canvas(target);
+		this.onStateUpdate = onStateUpdate;
 
 		this.selectedEvent();
 
@@ -70,6 +76,8 @@ class Canvas extends CanvasState {
 			this.canvas.freeDrawingBrush.color = nextState.selectedFillColor;
 			this.canvas.freeDrawingBrush.width = nextState.brushWidth;
 		}
+
+		this.onStateUpdate && this.onStateUpdate(nextState);
 	}
 
 	selectedEvent() {
@@ -146,6 +154,15 @@ class Canvas extends CanvasState {
 		this.canvas.add(image);
 
 		return image;
+	}
+
+	getCenterByImg(img: HTMLImageElement) {
+		const { left, top } = this.canvas.getCenter();
+
+		return {
+			left: left,
+			top: top,
+		};
 	}
 
 	undo() {

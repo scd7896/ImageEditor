@@ -1,3 +1,4 @@
+import { ICanvasState } from "../types/CanvasState";
 import Canvas from "./Canvas";
 import ScrollEvents from "./events/ScrollEvents";
 import StickerTouchEvents from "./events/StickerTouchEvent";
@@ -9,7 +10,7 @@ import { getResizeFillWidthHeight, getResizeImage } from "./util/Resize";
 class ImageEditor {
 	private canvas: Canvas;
 	private option: any;
-	private sticker: Sticker;
+	private stickerWrapper: HTMLDivElement;
 	private wrapper: HTMLDivElement;
 	private canvasWrapper: HTMLDivElement;
 	private imgUrl: string;
@@ -44,6 +45,24 @@ class ImageEditor {
 		img.onload = () => {
 			this.initImageSet.call(this, img);
 		};
+
+		this.onStateUpdate = this.onStateUpdate.bind(this);
+	}
+
+	showSticker() {
+		this.stickerWrapper.style.display = "flex";
+	}
+
+	hideSticker() {
+		this.stickerWrapper.style.display = "none";
+	}
+
+	onStateUpdate(nextState: ICanvasState) {
+		if (nextState.showStickerMode) {
+			this.showSticker.call(this);
+		} else {
+			this.hideSticker.call(this);
+		}
 	}
 
 	touchEventRegistry() {
@@ -69,14 +88,15 @@ class ImageEditor {
 
 	setOptions() {
 		const optionWrapper = document.createElement("div");
+		optionWrapper.classList.add("optionWrapper");
 		const options = new Options(this.option, this.canvas);
-		const sticker = new Sticker(
-			this.option.images,
-			new StickerTouchEvents(this.canvas, this.wrapper, this.canvasWrapper)
-		);
+		const sticker = new Sticker(this.option.images, new StickerTouchEvents(this.canvas, this.canvasWrapper));
 		const div = document.createElement("div");
+		div.style.display = "none";
+		div.classList.add("stickerWrapper");
+		this.stickerWrapper = div;
 		sticker.imageList.map((image) => div.appendChild(image));
-		optionWrapper.appendChild(div);
+		this.wrapper.appendChild(div);
 		new ToolButtons(options, optionWrapper, this.option.buttons);
 		this.wrapper.appendChild(optionWrapper);
 	}
@@ -100,10 +120,14 @@ class ImageEditor {
 			this.canvasWrapper.ondrop = (ev) => {
 				console.log(ev);
 			};
-			this.canvas = new Canvas(canvas, {
-				left: this.canvasWrapper.clientWidth / 4,
-				top: this.canvasWrapper.clientHeight / 4,
-			});
+			this.canvas = new Canvas(
+				canvas,
+				{
+					left: this.canvasWrapper.clientWidth / 4,
+					top: this.canvasWrapper.clientHeight / 4,
+				},
+				this.onStateUpdate
+			);
 
 			const { file } = getResizeImage(resizeImg, width > height ? width : height);
 			const initImage = new Image();
