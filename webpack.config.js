@@ -19,9 +19,9 @@ module.exports = function (env, args) {
 				},
 				{
 					test: /\.(png|jpe?g|gif|svg)$/i,
-					loader: "file-loader",
+					loader: "url-loader",
 					options: {
-						outputPath: "images",
+						limit: 8192,
 					},
 				},
 			],
