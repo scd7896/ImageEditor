@@ -46,4 +46,10 @@
 .stickerWrapper {
 	width: 100%;
 	overflow-x: scroll;
+	align-items: center;
+	padding: 8px;
+}
+
+.stickerWrapper img {
+	margin-left: 8px;
 }
