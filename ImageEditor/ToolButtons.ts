@@ -1,3 +1,4 @@
+import * as icons from "../icons";
 import Options from "./Options";
 
 export default class ToolButtons {
@@ -18,13 +19,23 @@ export default class ToolButtons {
 
 	createButton(title) {
 		const button = document.createElement("button");
-		button.textContent = title;
+		button.classList.add("option-button");
+		const iconName = `${title}Icon`;
+		console.log(iconName);
+		console.log(icons[iconName]);
+		if (icons[iconName]) {
+			const img = document.createElement("img");
+			img.src = icons[iconName];
+			button.appendChild(img);
+		} else {
+			button.textContent = title;
+		}
 		this.optionWrapper.appendChild(button);
 		return button;
 	}
 
 	pen() {
-		const button = this.createButton("펜");
+		const button = this.createButton("pen");
 		button.addEventListener("click", this.option.clickPen.bind(this.option));
 	}
 
@@ -67,9 +78,9 @@ export default class ToolButtons {
 		const button = this.createButton("업로드");
 	}
 
-	rect() {
-		const button = this.createButton("사각형");
-		button.addEventListener("click", this.option.rectClick.bind(this.option));
+	shape() {
+		const button = this.createButton("shape");
+		button.addEventListener("click", this.option.shapeClick.bind(this.option));
 	}
 
 	exports() {
@@ -88,7 +99,12 @@ export default class ToolButtons {
 	}
 
 	sticker() {
-		const button = this.createButton("스티커");
-		button.addEventListener("click", this.option.stickerOn.bind(this.option));
+		const button = this.createButton("sticker");
+		button.addEventListener("click", this.option.toggleStickerShow.bind(this.option));
+	}
+
+	close() {
+		const button = this.createButton("close");
+		button.addEventListener("click", this.option.closeClick.bind(this.option));
 	}
 }

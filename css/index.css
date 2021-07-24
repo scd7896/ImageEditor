@@ -12,8 +12,10 @@
 	bottom: 0;
 	left: 0;
 	height: 64px;
-	width: 100%;
-	background-color: black;
+	width: 70%;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 15%;
 }
 
 .canvas-wrapper {
@@ -38,9 +40,11 @@
 }
 
 .header {
-	width: 100%;
+	display: flex;
+	align-items: center;
+	width: 90%;
 	height: 64px;
-	background-color: black;
+	padding: 0 5%;
 }
 
 .stickerWrapper {
@@ -52,4 +56,15 @@
 
 .stickerWrapper img {
 	margin-left: 8px;
+}
+
+.headerOptionWrapper {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.option-button {
+	background-color: inherit;
+	border: none;
 }

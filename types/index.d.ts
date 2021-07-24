@@ -1,3 +1,5 @@
+declare module "*.png";
+declare module "*.svg";
 interface IOption {
 	baseImage: string;
 	stickers: string[];

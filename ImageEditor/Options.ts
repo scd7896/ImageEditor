@@ -1,14 +1,16 @@
 import Canvas from "./Canvas";
 class Options {
 	private canvas: Canvas;
-	private option: any;
+	private option: IOption;
+	private rootElement: HTMLDivElement;
 
-	constructor(option, canvas: Canvas) {
+	constructor(option, canvas: Canvas, rootElement: HTMLDivElement) {
 		this.canvas = canvas;
 		this.option = option;
+		this.rootElement = rootElement;
 	}
 
-	rectClick() {
+	shapeClick() {
 		this.canvas.addRect();
 	}
 
@@ -51,10 +53,9 @@ class Options {
 	}
 
 	exportsClick() {
-		const json = this.canvas.getJson();
 		const blob = this.canvas.getImage();
-		if (this.option.events.onExports) {
-			this.option.events.onExports({ json, blob });
+		if (this.option.events.onDownLoad) {
+			this.option.events.onDownLoad(blob);
 		}
 	}
 
@@ -77,16 +78,18 @@ class Options {
 		this.canvas.deleteSelected();
 	}
 
-	stickerOn() {
+	toggleStickerShow() {
 		this.canvas.setState({
-			showStickerMode: true,
+			showStickerMode: !this.canvas.state.showStickerMode,
 		});
 	}
 
-	stickerOff() {
-		this.canvas.setState({
-			showStickerMode: false,
-		});
+	closeClick() {
+		if (this.option.events.onCancel) {
+			this.option.events.onCancel();
+		} else {
+			this.rootElement.parentNode.removeChild(this.rootElement);
+		}
 	}
 }
 

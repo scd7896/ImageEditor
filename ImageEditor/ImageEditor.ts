@@ -7,12 +7,15 @@ import Sticker from "./Sticker";
 import ToolButtons from "./ToolButtons";
 import { getResizeFillWidthHeight, getResizeImage } from "./util/Resize";
 
+const footerButtons = ["shape", "pen", "sticker"];
+const headerButtons = ["close", "undo", "redo", "download"];
 class ImageEditor {
 	private canvas: Canvas;
 	private option: any;
 	private stickerWrapper: HTMLDivElement;
 	private wrapper: HTMLDivElement;
 	private canvasWrapper: HTMLDivElement;
+	private headerDiv: HTMLDivElement;
 	private imgUrl: string;
 
 	constructor(wrapper: string | HTMLDivElement, options) {
@@ -30,6 +33,7 @@ class ImageEditor {
 
 		const headerDiv = document.createElement("div");
 		headerDiv.classList.add("header");
+		this.headerDiv = headerDiv;
 		this.wrapper.appendChild(headerDiv);
 
 		const canvasWrapper = document.createElement("div");
@@ -89,16 +93,20 @@ class ImageEditor {
 	setOptions() {
 		const optionWrapper = document.createElement("div");
 		optionWrapper.classList.add("optionWrapper");
-		const options = new Options(this.option, this.canvas);
+		const options = new Options(this.option, this.canvas, this.wrapper);
 		const sticker = new Sticker(this.option.images, new StickerTouchEvents(this.canvas, this.canvasWrapper));
 		const div = document.createElement("div");
+		const headerOptionWrapper = document.createElement("div");
 		div.style.display = "none";
 		div.classList.add("stickerWrapper");
+		headerOptionWrapper.classList.add("headerOptionWrapper");
 		this.stickerWrapper = div;
 		sticker.imageList.map((image) => div.appendChild(image));
 		this.wrapper.appendChild(div);
-		new ToolButtons(options, optionWrapper, this.option.buttons);
+		new ToolButtons(options, optionWrapper, footerButtons);
+		new ToolButtons(options, headerOptionWrapper, headerButtons);
 		this.wrapper.appendChild(optionWrapper);
+		this.headerDiv.appendChild(headerOptionWrapper);
 	}
 
 	async initImageSet(image: HTMLImageElement) {
@@ -136,7 +144,7 @@ class ImageEditor {
 				this.canvas.addImage(initImage, { selectable: false });
 				this.canvas.clearHistory();
 				this.toCenterScroll();
-				this.setOptions();
+				this.setOptions.call(this);
 			};
 		};
 	}

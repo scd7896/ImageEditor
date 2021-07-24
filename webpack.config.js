@@ -17,6 +17,13 @@ module.exports = function (env, args) {
 					use: ["babel-loader", "ts-loader"],
 					exclude: ["/node_modules", "/index.ts"],
 				},
+				{
+					test: /\.(png|jpe?g|gif|svg)$/i,
+					loader: "file-loader",
+					options: {
+						outputPath: "images",
+					},
+				},
 			],
 		},
 	};
