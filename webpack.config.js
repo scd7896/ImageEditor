@@ -24,6 +24,10 @@ module.exports = function (env, args) {
 						limit: 8192,
 					},
 				},
+				{
+					test: /\.css/i,
+					use: ["style-loader", "css-loader"],
+				},
 			],
 		},
 	};

@@ -6,6 +6,7 @@ import Options from "./Options";
 import Sticker from "./Sticker";
 import ToolButtons from "./ToolButtons";
 import { getResizeFillWidthHeight, getResizeImage } from "./util/Resize";
+import "../css/index.css";
 
 const footerButtons = ["shape", "pen", "sticker"];
 const headerButtons = ["close", "undo", "redo", "download"];
