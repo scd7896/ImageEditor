@@ -73,7 +73,6 @@ class ImageEditor {
 		}
 
 		if (nextState.showShapeMode) {
-			console.log("aaa", this);
 			this.shapeWrapper.style.display = "flex";
 		} else {
 			this.shapeWrapper.style.display = "none";

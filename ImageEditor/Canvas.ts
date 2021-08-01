@@ -108,8 +108,6 @@ class Canvas extends CanvasState {
 			fill: this.state.selectedFillColor,
 		});
 
-		console.log("addCircle", circle);
-
 		this.canvas.add(circle);
 		return circle;
 	}

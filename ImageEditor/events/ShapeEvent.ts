@@ -16,7 +16,6 @@ class ShapeEvent {
 
 	circleClickEvent() {
 		const center = getWindowCenter(this.canvasWrapper, 100, 100);
-		console.log("circle");
 		this.canvas.addCircle({ width: 100, height: 100, ...center });
 	}
 

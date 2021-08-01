@@ -21,8 +21,6 @@ export default class ToolButtons {
 		const button = document.createElement("button");
 		button.classList.add("option-button");
 		const iconName = `${title}Icon`;
-		console.log(iconName);
-		console.log(icons[iconName]);
 		if (icons[iconName]) {
 			const img = document.createElement("img");
 			img.src = icons[iconName];

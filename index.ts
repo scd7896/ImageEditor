@@ -23,7 +23,6 @@ init("canvas-example", {
 			a.href = url;
 			a.click();
 			URL.revokeObjectURL(url);
-			console.log(file);
 		},
 	},
 });
