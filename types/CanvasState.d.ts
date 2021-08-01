@@ -6,4 +6,5 @@ export interface ICanvasState {
 	brushWidth?: number;
 	selected?: fabric.Object[] | null;
 	showStickerMode?: boolean;
+	showShapeMode?: boolean;
 }

@@ -9,3 +9,12 @@ interface IOption {
 		onCancel?: () => void;
 	};
 }
+
+interface IAddShape {
+	width: number;
+	height: number;
+	top: number;
+	left: number;
+}
+
+type ShapeType = "triangle" | "circle" | "rect";

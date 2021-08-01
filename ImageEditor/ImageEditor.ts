@@ -7,6 +7,8 @@ import Sticker from "./Sticker";
 import ToolButtons from "./ToolButtons";
 import { getResizeFillWidthHeight, getResizeImage } from "./util/Resize";
 import "../css/index.css";
+import Shape from "./Shape";
+import ShapeEvent from "./events/ShapeEvent";
 
 const footerButtons = ["shape", "pen", "sticker"];
 const headerButtons = ["close", "undo", "redo", "download"];
@@ -16,6 +18,7 @@ class ImageEditor {
 	private stickerWrapper: HTMLDivElement;
 	private wrapper: HTMLDivElement;
 	private canvasWrapper: HTMLDivElement;
+	private shapeWrapper: HTMLDivElement;
 	private headerDiv: HTMLDivElement;
 	private imgUrl: string;
 
@@ -68,6 +71,13 @@ class ImageEditor {
 		} else {
 			this.hideSticker.call(this);
 		}
+
+		if (nextState.showShapeMode) {
+			console.log("aaa", this);
+			this.shapeWrapper.style.display = "flex";
+		} else {
+			this.shapeWrapper.style.display = "none";
+		}
 	}
 
 	touchEventRegistry() {
@@ -91,19 +101,31 @@ class ImageEditor {
 		this.canvasWrapper.scroll(moveToScrollLeft, moveToScrollTop);
 	}
 
+	createStickerWrapper() {
+		const sticker = new Sticker(this.option.images, new StickerTouchEvents(this.canvas, this.canvasWrapper));
+		const stickerWrapper = document.createElement("div");
+		stickerWrapper.style.display = "none";
+		stickerWrapper.classList.add("stickerWrapper");
+		this.stickerWrapper = stickerWrapper;
+		sticker.imageList.map((image) => stickerWrapper.appendChild(image));
+		this.wrapper.appendChild(stickerWrapper);
+	}
+
+	createShapeWrapper() {
+		const shapeWrapper = document.createElement("div");
+		shapeWrapper.style.display = "none";
+		shapeWrapper.classList.add("shapeWrapper");
+		this.shapeWrapper = shapeWrapper;
+		new Shape(this.shapeWrapper, new ShapeEvent(this.canvas, this.canvasWrapper));
+		this.wrapper.appendChild(shapeWrapper);
+	}
+
 	setOptions() {
 		const optionWrapper = document.createElement("div");
-		optionWrapper.classList.add("optionWrapper");
-		const options = new Options(this.option, this.canvas, this.wrapper);
-		const sticker = new Sticker(this.option.images, new StickerTouchEvents(this.canvas, this.canvasWrapper));
-		const div = document.createElement("div");
 		const headerOptionWrapper = document.createElement("div");
-		div.style.display = "none";
-		div.classList.add("stickerWrapper");
+		optionWrapper.classList.add("optionWrapper");
 		headerOptionWrapper.classList.add("headerOptionWrapper");
-		this.stickerWrapper = div;
-		sticker.imageList.map((image) => div.appendChild(image));
-		this.wrapper.appendChild(div);
+		const options = new Options(this.option, this.canvas, this.wrapper);
 		new ToolButtons(options, optionWrapper, footerButtons);
 		new ToolButtons(options, headerOptionWrapper, headerButtons);
 		this.wrapper.appendChild(optionWrapper);
@@ -126,9 +148,6 @@ class ImageEditor {
 			canvas.height = height;
 
 			this.canvasWrapper.appendChild(canvas);
-			this.canvasWrapper.ondrop = (ev) => {
-				console.log(ev);
-			};
 			this.canvas = new Canvas(
 				canvas,
 				{
@@ -145,6 +164,8 @@ class ImageEditor {
 				this.canvas.addImage(initImage, { selectable: false });
 				this.canvas.clearHistory();
 				this.toCenterScroll();
+				this.createStickerWrapper.call(this);
+				this.createShapeWrapper.call(this);
 				this.setOptions.call(this);
 			};
 		};

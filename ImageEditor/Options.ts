@@ -11,7 +11,9 @@ class Options {
 	}
 
 	shapeClick() {
-		this.canvas.addRect();
+		this.canvas.setState({
+			showShapeMode: !this.canvas.state.showShapeMode,
+		});
 	}
 
 	clickPen() {

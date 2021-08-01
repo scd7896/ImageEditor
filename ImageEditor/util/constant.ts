@@ -5,3 +5,4 @@ export const BUTTON_TITLE = {
 	sticker: "스티커",
 	shape: "도형",
 };
+export const shapeList: ShapeType[] = ["rect", "circle", "triangle"];

@@ -64,7 +64,6 @@ class Canvas extends CanvasState {
 		this.selectedEvent();
 
 		this.addRect = this.addRect.bind(this);
-		this.setActiveObject = this.setActiveObject.bind(this);
 	}
 
 	setScrollPoint(nextScrollPoint: ScrollPoint) {
@@ -90,17 +89,40 @@ class Canvas extends CanvasState {
 		this.canvas.on("selection:created", handleSelect.bind(this));
 	}
 
-	addRect() {
+	addRect(param: IAddShape) {
 		const rect = new fabric.Rect({
-			width: 50,
-			height: 50,
-			...this.canvas.getCenter(),
+			...param,
 			stroke: this.state.selectedStrokeColoe,
 			fill: this.state.selectedFillColor,
 		});
 
 		this.canvas.add(rect);
 		return rect;
+	}
+
+	addCircle(param: IAddShape) {
+		const circle = new fabric.Circle({
+			...param,
+			radius: (param.width + param.height) / 2,
+			stroke: this.state.selectedStrokeColoe,
+			fill: this.state.selectedFillColor,
+		});
+
+		console.log("addCircle", circle);
+
+		this.canvas.add(circle);
+		return circle;
+	}
+
+	addTriangle(param: IAddShape) {
+		const triangle = new fabric.Triangle({
+			...param,
+			stroke: this.state.selectedStrokeColoe,
+			fill: this.state.selectedFillColor,
+		});
+
+		this.canvas.add(triangle);
+		return triangle;
 	}
 
 	deleteSelected() {
@@ -193,17 +215,6 @@ class Canvas extends CanvasState {
 
 	remove(object) {
 		this.canvas.remove(object);
-	}
-
-	setActiveObject(object) {
-		this.canvas.getObjects().forEach((obj, i) => {
-			if (obj === object) {
-				if (i !== 0) this.canvas.setActiveObject(object);
-			}
-		});
-
-		const rect = this.addRect();
-		this.canvas.remove(rect);
 	}
 
 	get undoHistoryLength() {

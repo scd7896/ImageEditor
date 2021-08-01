@@ -1,4 +1,5 @@
 import Canvas from "../Canvas";
+import { getWindowCenter } from "../util/getWindowCenter";
 
 class StickerTouchEvents {
 	public canvasWrapper: HTMLElement;
@@ -12,14 +13,8 @@ class StickerTouchEvents {
 
 	clickEvent(ev: MouseEvent) {
 		const img = ev.target as HTMLImageElement;
-		const halfWidth = window.innerWidth / 2;
-		const top = halfWidth - img.width / 2;
-		const left = halfWidth - img.height / 2;
 
-		this.canvas.addImage(img, {
-			top: this.canvasWrapper.scrollTop + top,
-			left: this.canvasWrapper.scrollLeft + left,
-		});
+		this.canvas.addImage(img, getWindowCenter(this.canvasWrapper, img.width, img.height));
 	}
 }
 
