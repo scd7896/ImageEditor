@@ -1,10 +1,10 @@
+export type Mode = "pen" | "sticker" | "shape" | "normal";
+
 export interface ICanvasState {
 	selectedFillColor?: string;
 	selectedStrokeColoe?: string;
 	selectedWidth?: number;
-	mode?: string;
+	mode?: Mode;
 	brushWidth?: number;
 	selected?: fabric.Object[] | null;
-	showStickerMode?: boolean;
-	showShapeMode?: boolean;
 }

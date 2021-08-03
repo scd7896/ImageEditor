@@ -1,3 +1,4 @@
+import * as icons from "../icons";
 import ShapeEvent from "./events/ShapeEvent";
 import { shapeList } from "./util/constant";
 import { findTargetElementByType } from "./util/events";
@@ -6,9 +7,13 @@ class Shape {
 	constructor(shapeWrapper: HTMLDivElement, shapeEvent: ShapeEvent) {
 		shapeList.map((title) => {
 			const button = document.createElement("button");
-			button.textContent = title;
+			const iconName = title + "SVG";
+			if (icons[iconName]) {
+				button.innerHTML = icons[iconName]();
+			}
 			button.dataset.type = "shape";
 			button.dataset.target = title;
+			button.classList.add("shapeButton");
 			shapeWrapper.appendChild(button);
 			return button;
 		});

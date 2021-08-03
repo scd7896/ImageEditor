@@ -1,4 +1,4 @@
-import { ICanvasState } from "../types/CanvasState";
+import { ICanvasState, Mode } from "../types/CanvasState";
 import Canvas from "./Canvas";
 import ScrollEvents from "./events/ScrollEvents";
 import StickerTouchEvents from "./events/StickerTouchEvent";
@@ -9,6 +9,7 @@ import { getResizeFillWidthHeight, getResizeImage } from "./util/Resize";
 import "../css/index.css";
 import Shape from "./Shape";
 import ShapeEvent from "./events/ShapeEvent";
+import { findTargetElementByType } from "./util/events";
 
 const footerButtons = ["shape", "pen", "sticker"];
 const headerButtons = ["close", "undo", "redo", "download"];
@@ -57,25 +58,23 @@ class ImageEditor {
 		this.onStateUpdate = this.onStateUpdate.bind(this);
 	}
 
-	showSticker() {
-		this.stickerWrapper.style.display = "flex";
-	}
-
-	hideSticker() {
-		this.stickerWrapper.style.display = "none";
-	}
-
 	onStateUpdate(nextState: ICanvasState) {
-		if (nextState.showStickerMode) {
-			this.showSticker.call(this);
-		} else {
-			this.hideSticker.call(this);
-		}
+		switch (nextState.mode) {
+			case "shape": {
+				this.shapeWrapper.style.display = "flex";
+				this.stickerWrapper.style.display = "none";
+				break;
+			}
+			case "sticker": {
+				this.stickerWrapper.style.display = "flex";
+				this.shapeWrapper.style.display = "none";
+				break;
+			}
 
-		if (nextState.showShapeMode) {
-			this.shapeWrapper.style.display = "flex";
-		} else {
-			this.shapeWrapper.style.display = "none";
+			default: {
+				this.stickerWrapper.style.display = "none";
+				this.shapeWrapper.style.display = "none";
+			}
 		}
 	}
 
@@ -119,6 +118,16 @@ class ImageEditor {
 		this.wrapper.appendChild(shapeWrapper);
 	}
 
+	optionWrapperClickListener(event) {
+		const target = findTargetElementByType(event.target, "bottomMenu");
+		if (target) {
+			const mode = target.dataset.mode as Mode;
+			this.canvas.setState({
+				mode,
+			});
+		}
+	}
+
 	setOptions() {
 		const optionWrapper = document.createElement("div");
 		const headerOptionWrapper = document.createElement("div");
@@ -127,6 +136,7 @@ class ImageEditor {
 		const options = new Options(this.option, this.canvas, this.wrapper);
 		new ToolButtons(options, optionWrapper, footerButtons);
 		new ToolButtons(options, headerOptionWrapper, headerButtons);
+		optionWrapper.addEventListener("click", this.optionWrapperClickListener.bind(this));
 		this.wrapper.appendChild(optionWrapper);
 		this.headerDiv.appendChild(headerOptionWrapper);
 	}

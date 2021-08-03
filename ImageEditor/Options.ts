@@ -12,7 +12,7 @@ class Options {
 
 	shapeClick() {
 		this.canvas.setState({
-			showShapeMode: !this.canvas.state.showShapeMode,
+			mode: "shape",
 		});
 	}
 
@@ -82,7 +82,7 @@ class Options {
 
 	toggleStickerShow() {
 		this.canvas.setState({
-			showStickerMode: !this.canvas.state.showStickerMode,
+			mode: "sticker",
 		});
 	}
 

@@ -20,21 +20,30 @@ export default class ToolButtons {
 	createButton(title) {
 		const button = document.createElement("button");
 		button.classList.add("option-button");
-		const iconName = `${title}Icon`;
+		const iconName = `${title}SVG`;
 		if (icons[iconName]) {
-			const img = document.createElement("img");
-			img.src = icons[iconName];
-			button.appendChild(img);
-		} else {
-			button.textContent = title;
+			const text = icons[iconName](false);
+			button.innerHTML = text;
 		}
+
+		switch (title) {
+			case "shape":
+			case "pen":
+			case "sticker":
+				const span = document.createElement("span");
+				span.classList.add("button-title");
+				span.textContent = title;
+				button.appendChild(span);
+				button.dataset.type = "bottomMenu";
+				button.dataset.mode = title;
+		}
+
 		this.optionWrapper.appendChild(button);
 		return button;
 	}
 
 	pen() {
-		const button = this.createButton("pen");
-		button.addEventListener("click", this.option.clickPen.bind(this.option));
+		this.createButton("pen");
 	}
 
 	color() {
@@ -77,8 +86,7 @@ export default class ToolButtons {
 	}
 
 	shape() {
-		const button = this.createButton("shape");
-		button.addEventListener("click", this.option.shapeClick.bind(this.option));
+		this.createButton("shape");
 	}
 
 	exports() {
@@ -97,8 +105,7 @@ export default class ToolButtons {
 	}
 
 	sticker() {
-		const button = this.createButton("sticker");
-		button.addEventListener("click", this.option.toggleStickerShow.bind(this.option));
+		this.createButton("sticker");
 	}
 
 	close() {
