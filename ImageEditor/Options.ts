@@ -13,37 +13,18 @@ class Options {
 	shapeClick() {
 		this.canvas.setState({
 			mode: "shape",
+			viewSelectColorPicker: false,
 		});
 	}
 
 	clickPen() {
 		if (this.canvas.state.mode !== "pen") {
-			this.canvas.setState({ mode: "pen" });
+			this.canvas.setState({ mode: "pen", viewSelectColorPicker: false });
 			this.canvas.drwaingModeOn();
 		} else {
-			this.canvas.setState({ mode: "normal" });
+			this.canvas.setState({ mode: "normal", viewSelectColorPicker: false });
 			this.canvas.drwaingModeOff();
 		}
-	}
-
-	colorChange(e) {
-		const selected = this.canvas.getSelected();
-		if (selected) {
-			selected.map((obj) => {
-				if (obj.type === "path") {
-					obj.set("stroke", e.target.value);
-				} else {
-					obj.set("backgroundColor", e.target.value);
-					obj.set("fill", e.target.value);
-				}
-			});
-		}
-		if (this.canvas.state.mode === "pen") {
-			this.canvas.drwaingModeOn();
-		}
-		this.canvas.setState({
-			selectedFillColor: e.target.value,
-		});
 	}
 
 	undoClick() {

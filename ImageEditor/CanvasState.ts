@@ -9,11 +9,11 @@ abstract class CanvasState {
 	constructor() {
 		this.setState({
 			selectedFillColor: DEFAULT_COLOR,
-			selectedStrokeColoe: DEFAULT_COLOR,
 			selectedWidth: DEFAULT_WIDTH,
 			brushWidth: DEFAULT_WIDTH,
 			mode: "normal",
 			selected: null,
+			viewSelectColorPicker: false,
 		});
 	}
 

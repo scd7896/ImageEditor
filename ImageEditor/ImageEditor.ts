@@ -10,6 +10,7 @@ import "../css/index.css";
 import Shape from "./Shape";
 import ShapeEvent from "./events/ShapeEvent";
 import { findTargetElementByType } from "./util/events";
+import ColorPicker from "./ColorPicker";
 
 const footerButtons = ["shape", "pen", "sticker"];
 const headerButtons = ["close", "undo", "redo", "download"];
@@ -21,6 +22,9 @@ class ImageEditor {
 	private canvasWrapper: HTMLDivElement;
 	private shapeWrapper: HTMLDivElement;
 	private headerDiv: HTMLDivElement;
+	private colorPickerWrapper: HTMLDivElement;
+	private colorPicker: ColorPicker;
+
 	private imgUrl: string;
 
 	constructor(wrapper: string | HTMLDivElement, options) {
@@ -58,7 +62,16 @@ class ImageEditor {
 		this.onStateUpdate = this.onStateUpdate.bind(this);
 	}
 
+	createColorPicker() {
+		const colorPickerWrapper = document.createElement("div");
+		colorPickerWrapper.classList.add("buttonColorPickerWrapper");
+		this.colorPicker = new ColorPicker(this.canvas, colorPickerWrapper, this.wrapper);
+		this.colorPickerWrapper = colorPickerWrapper;
+	}
+
 	onStateUpdate(nextState: ICanvasState) {
+		if (this.colorPicker?.onToggleColorPicker) this.colorPicker.onToggleColorPicker(nextState.viewSelectColorPicker);
+
 		switch (nextState.mode) {
 			case "shape": {
 				this.shapeWrapper.style.display = "flex";
@@ -114,7 +127,12 @@ class ImageEditor {
 		shapeWrapper.style.display = "none";
 		shapeWrapper.classList.add("shapeWrapper");
 		this.shapeWrapper = shapeWrapper;
-		new Shape(this.shapeWrapper, new ShapeEvent(this.canvas, this.canvasWrapper));
+		const buttonWrapper = document.createElement("div");
+		buttonWrapper.classList.add("buttonWrapper");
+		new Shape(buttonWrapper, new ShapeEvent(this.canvas, this.canvasWrapper));
+
+		shapeWrapper.appendChild(buttonWrapper);
+		shapeWrapper.appendChild(this.colorPickerWrapper);
 		this.wrapper.appendChild(shapeWrapper);
 	}
 
@@ -124,6 +142,7 @@ class ImageEditor {
 			const mode = target.dataset.mode as Mode;
 			this.canvas.setState({
 				mode,
+				viewSelectColorPicker: false,
 			});
 		}
 	}
@@ -165,6 +184,7 @@ class ImageEditor {
 				},
 				this.onStateUpdate
 			);
+			this.createColorPicker();
 
 			const { file } = getResizeImage(resizeImg, width > height ? width : height);
 			const initImage = new Image();

@@ -92,10 +92,9 @@ class Canvas extends CanvasState {
 	addRect(param: IAddShape) {
 		const rect = new fabric.Rect({
 			...param,
-			stroke: this.state.selectedStrokeColoe,
+			stroke: this.state.selectedFillColor,
 			fill: this.state.selectedFillColor,
 		});
-
 		this.canvas.add(rect);
 		return rect;
 	}
@@ -103,8 +102,8 @@ class Canvas extends CanvasState {
 	addCircle(param: IAddShape) {
 		const circle = new fabric.Circle({
 			...param,
-			radius: (param.width + param.height) / 2,
-			stroke: this.state.selectedStrokeColoe,
+			radius: (param.width + param.height) / 4,
+			stroke: this.state.selectedFillColor,
 			fill: this.state.selectedFillColor,
 		});
 
@@ -115,7 +114,7 @@ class Canvas extends CanvasState {
 	addTriangle(param: IAddShape) {
 		const triangle = new fabric.Triangle({
 			...param,
-			stroke: this.state.selectedStrokeColoe,
+			stroke: this.state.selectedFillColor,
 			fill: this.state.selectedFillColor,
 		});
 

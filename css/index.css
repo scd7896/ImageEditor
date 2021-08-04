@@ -82,7 +82,68 @@
 	margin-top: 8px;
 }
 
+.shapeWrapper {
+	width: 100%;
+	position: absolute;
+	height: 69px;
+	bottom: 70px;
+	left: 0;
+	border: 1px solid #f0f0f0;
+}
+
+.buttonWrapper {
+	display: flex;
+	justify-content: center;
+	width: 80%;
+	height: 100%;
+	border-right: 1px solid #f0f0f0;
+}
+
+.buttonColorPickerWrapper {
+	width: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .shapeButton {
 	background-color: inherit;
 	border: none;
+}
+
+.shapeButton + .shapeButton {
+	margin-left: 16px;
+}
+
+.colorToggleButton {
+	width: 32px;
+	height: 32px;
+	border: 1px solid #333333;
+}
+
+.colorPickerWrapper {
+	width: 100%;
+	position: absolute;
+	bottom: 138px;
+	left: 0;
+}
+
+.colorWrapper {
+	display: flex;
+	justify-content: space-between;
+	padding: 16px 20px;
+}
+
+.colorButton {
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+}
+
+.colorButton.whiteBorder {
+	border: 1px solid #e8e8e8;
+}
+
+.colorButton.selected {
+	border: 1px solid black;
 }
