@@ -11,9 +11,11 @@ import Shape from "./Shape";
 import ShapeEvent from "./events/ShapeEvent";
 import { findTargetElementByType } from "./util/events";
 import ColorPicker from "./ColorPicker";
+import Pen from "./Pen";
+import PenEvent from "./events/PenEvent";
 
 const footerButtons = ["shape", "pen", "sticker"];
-const headerButtons = ["close", "undo", "redo", "download"];
+const headerButtons = ["close", "undo", "redo", "reset", "remove", "download"];
 class ImageEditor {
 	private canvas: Canvas;
 	private option: any;
@@ -21,9 +23,10 @@ class ImageEditor {
 	private wrapper: HTMLDivElement;
 	private canvasWrapper: HTMLDivElement;
 	private shapeWrapper: HTMLDivElement;
+	private penWrapper: HTMLDivElement;
 	private headerDiv: HTMLDivElement;
-	private colorPickerWrapper: HTMLDivElement;
 	private colorPicker: ColorPicker;
+	private footerOptionTools: ToolButtons;
 
 	private imgUrl: string;
 
@@ -62,31 +65,37 @@ class ImageEditor {
 		this.onStateUpdate = this.onStateUpdate.bind(this);
 	}
 
-	createColorPicker() {
-		const colorPickerWrapper = document.createElement("div");
+	createColorPicker(colorPickerWrapper) {
 		colorPickerWrapper.classList.add("buttonColorPickerWrapper");
 		this.colorPicker = new ColorPicker(this.canvas, colorPickerWrapper, this.wrapper);
-		this.colorPickerWrapper = colorPickerWrapper;
 	}
 
 	onStateUpdate(nextState: ICanvasState) {
-		if (this.colorPicker?.onToggleColorPicker) this.colorPicker.onToggleColorPicker(nextState.viewSelectColorPicker);
-
 		switch (nextState.mode) {
 			case "shape": {
 				this.shapeWrapper.style.display = "flex";
 				this.stickerWrapper.style.display = "none";
+				this.penWrapper.style.display = "none";
 				break;
 			}
 			case "sticker": {
 				this.stickerWrapper.style.display = "flex";
 				this.shapeWrapper.style.display = "none";
+				this.penWrapper.style.display = "none";
+				break;
+			}
+
+			case "pen": {
+				this.penWrapper.style.display = "flex";
+				this.shapeWrapper.style.display = "none";
+				this.stickerWrapper.style.display = "none";
 				break;
 			}
 
 			default: {
 				this.stickerWrapper.style.display = "none";
 				this.shapeWrapper.style.display = "none";
+				this.penWrapper.style.display = "none";
 			}
 		}
 	}
@@ -122,6 +131,21 @@ class ImageEditor {
 		this.wrapper.appendChild(stickerWrapper);
 	}
 
+	createPenWrapper() {
+		const penWrapper = document.createElement("div");
+		penWrapper.style.display = "none";
+		penWrapper.classList.add("penWrapper");
+		const buttonWrapper = document.createElement("div");
+		buttonWrapper.classList.add("penSizeWrapper");
+		new Pen(buttonWrapper, new PenEvent(this.canvas));
+		penWrapper.appendChild(buttonWrapper);
+		const colorPicker = document.createElement("div");
+		this.createColorPicker(colorPicker);
+		penWrapper.appendChild(colorPicker);
+		this.penWrapper = penWrapper;
+		this.wrapper.appendChild(penWrapper);
+	}
+
 	createShapeWrapper() {
 		const shapeWrapper = document.createElement("div");
 		shapeWrapper.style.display = "none";
@@ -132,7 +156,11 @@ class ImageEditor {
 		new Shape(buttonWrapper, new ShapeEvent(this.canvas, this.canvasWrapper));
 
 		shapeWrapper.appendChild(buttonWrapper);
-		shapeWrapper.appendChild(this.colorPickerWrapper);
+
+		const colorPicker = document.createElement("div");
+		this.createColorPicker(colorPicker);
+
+		shapeWrapper.appendChild(colorPicker);
 		this.wrapper.appendChild(shapeWrapper);
 	}
 
@@ -140,9 +168,16 @@ class ImageEditor {
 		const target = findTargetElementByType(event.target, "bottomMenu");
 		if (target) {
 			const mode = target.dataset.mode as Mode;
+			const parent = target.parentElement;
+
+			this.canvas.drwaingModeOff();
 			this.canvas.setState({
 				mode,
 				viewSelectColorPicker: false,
+			});
+			parent.innerHTML = "";
+			footerButtons.map((val) => {
+				this.footerOptionTools.rerenderOptionTools(val as Mode, val === mode);
 			});
 		}
 	}
@@ -153,7 +188,7 @@ class ImageEditor {
 		optionWrapper.classList.add("optionWrapper");
 		headerOptionWrapper.classList.add("headerOptionWrapper");
 		const options = new Options(this.option, this.canvas, this.wrapper);
-		new ToolButtons(options, optionWrapper, footerButtons);
+		this.footerOptionTools = new ToolButtons(options, optionWrapper, footerButtons);
 		new ToolButtons(options, headerOptionWrapper, headerButtons);
 		optionWrapper.addEventListener("click", this.optionWrapperClickListener.bind(this));
 		this.wrapper.appendChild(optionWrapper);
@@ -184,7 +219,6 @@ class ImageEditor {
 				},
 				this.onStateUpdate
 			);
-			this.createColorPicker();
 
 			const { file } = getResizeImage(resizeImg, width > height ? width : height);
 			const initImage = new Image();
@@ -195,6 +229,7 @@ class ImageEditor {
 				this.toCenterScroll();
 				this.createStickerWrapper.call(this);
 				this.createShapeWrapper.call(this);
+				this.createPenWrapper.call(this);
 				this.setOptions.call(this);
 			};
 		};

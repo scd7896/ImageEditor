@@ -15,7 +15,7 @@ class ColorPicker {
 		colorToggleButton.style.background = this.canvas.state.selectedFillColor;
 		this.colorToggleButton = colorToggleButton;
 		colorToggleButton.addEventListener("click", () => {
-			this.canvas.setState({ viewSelectColorPicker: !this.canvas.state.viewSelectColorPicker });
+			this.onToggleColorPicker(this.colorPickerWrapper.style.display === "none");
 		});
 
 		const colorPickerWrapper = document.createElement("div");

@@ -1,4 +1,5 @@
 import * as icons from "../icons";
+import { Mode } from "../types/CanvasState";
 import Options from "./Options";
 
 export default class ToolButtons {
@@ -15,6 +16,26 @@ export default class ToolButtons {
 		buttons.map((button) => {
 			this[button]();
 		});
+	}
+
+	rerenderOptionTools(mode: Mode, selected: boolean) {
+		const button = document.createElement("button");
+		button.classList.add("option-button");
+		const iconName = `${mode}SVG`;
+		if (icons[iconName]) {
+			const text = icons[iconName](selected);
+			button.innerHTML = text;
+		}
+		if (selected) button.classList.add("selected");
+		const span = document.createElement("span");
+		span.classList.add("button-title");
+		span.textContent = mode;
+		button.appendChild(span);
+		button.dataset.type = "bottomMenu";
+		button.dataset.mode = mode;
+
+		this.optionWrapper.appendChild(button);
+		return button;
 	}
 
 	createButton(title) {
@@ -47,17 +68,17 @@ export default class ToolButtons {
 	}
 
 	undo() {
-		const button = this.createButton("뒤로");
+		const button = this.createButton("undo");
 		button.addEventListener("click", this.option.undoClick.bind(this.option));
 	}
 
 	redo() {
-		const button = this.createButton("앞으로");
+		const button = this.createButton("redo");
 		button.addEventListener("click", this.option.redoClick.bind(this.option));
 	}
 
 	download() {
-		const button = this.createButton("다운로드");
+		const button = this.createButton("download");
 		button.addEventListener("click", this.option.downLoadClick.bind(this.option));
 	}
 
@@ -75,12 +96,12 @@ export default class ToolButtons {
 	}
 
 	reset() {
-		const button = this.createButton("리셋하기");
+		const button = this.createButton("reset");
 		button.addEventListener("click", this.option.resetButtonClick.bind(this.option));
 	}
 
 	remove() {
-		const button = this.createButton("삭제하기");
+		const button = this.createButton("remove");
 		button.addEventListener("click", this.option.deleteClick.bind(this.option));
 	}
 

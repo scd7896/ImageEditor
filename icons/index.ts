@@ -30,10 +30,10 @@ export const penSVG = (isSelected?: boolean) => `
 export const stickerSVG = (isSelected?: boolean) => `
 <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M13.88 23.08H5C2.79086 23.08 1 21.2891 1 19.08V5C1 2.79086 2.79086 1 5 1H19.08C21.2891 1 23.08 2.79086 23.08 5V13.88" stroke=${
-	isSelected ? "333333" : "#B0B0B0"
+	isSelected ? "#333333" : "#B0B0B0"
 } stroke-width="2"/>
 <path d="M15.88 14.88H21.5858L14.88 21.5858V15.88C14.88 15.3277 15.3277 14.88 15.88 14.88Z" stroke=${
-	isSelected ? "333333" : "#B0B0B0"
+	isSelected ? "#333333" : "#B0B0B0"
 } stroke-width="2"/>
 </svg>
 `;
@@ -60,4 +60,40 @@ export const triangleSVG = () => `
 <svg width="40" height="33" viewBox="0 0 40 33" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.82357 31.75L20 0.983005L38.1764 31.75H1.82357Z" stroke="#333333"/>
 </svg>
+`;
+
+export const undoSVG = () => `
+<svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 20C17.866 20 21 16.866 21 13C21 9.13401 17.866 6 14 6" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/>
+<path d="M15 6L3 6" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/>
+<path d="M6.70711 10.2929C7.09763 10.6834 7.09763 11.3166 6.70711 11.7071C6.31658 12.0976 5.68342 12.0976 5.29289 11.7071L6.70711 10.2929ZM1 6L0.292893 6.70711C-0.0976315 6.31658 -0.0976316 5.68342 0.292893 5.29289L1 6ZM5.29289 0.292893C5.68342 -0.0976319 6.31658 -0.0976319 6.70711 0.292893C7.09763 0.683417 7.09763 1.31658 6.70711 1.70711L5.29289 0.292893ZM5.29289 11.7071L0.292893 6.70711L1.70711 5.29289L6.70711 10.2929L5.29289 11.7071ZM0.292893 5.29289L5.29289 0.292893L6.70711 1.70711L1.70711 6.70711L0.292893 5.29289Z" fill="#B0B0B0"/>
+</svg>
+`;
+
+export const redoSVG = () => `
+<svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 20C4.13401 20 1 16.866 1 13C1 9.13401 4.13401 6 8 6" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/>
+<path d="M7 6L19 6" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/>
+<path d="M15.2929 1.70711C14.9024 1.31658 14.9024 0.683418 15.2929 0.292894C15.6834 -0.0976306 16.3166 -0.0976307 16.7071 0.292894L15.2929 1.70711ZM21 6L21.7071 5.29289C22.0976 5.68342 22.0976 6.31658 21.7071 6.70711L21 6ZM16.7071 11.7071C16.3166 12.0976 15.6834 12.0976 15.2929 11.7071C14.9024 11.3166 14.9024 10.6834 15.2929 10.2929L16.7071 11.7071ZM16.7071 0.292894L21.7071 5.29289L20.2929 6.70711L15.2929 1.70711L16.7071 0.292894ZM21.7071 6.70711L16.7071 11.7071L15.2929 10.2929L20.2929 5.29289L21.7071 6.70711Z" fill="#B0B0B0"/>
+</svg>
+`;
+
+export const resetSVG = () => `
+<svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16.6355 8.36982C16.2323 7.99241 15.5994 8.01334 15.222 8.41655C14.8446 8.81977 14.8656 9.45259 15.2688 9.82999L16.6355 8.36982ZM19.0496 11.9991L18.3663 12.7292C18.7695 13.1066 19.4023 13.0857 19.7797 12.6825L19.0496 11.9991ZM22.6789 9.58498C23.0563 9.18176 23.0354 8.54894 22.6322 8.17154C22.229 7.79413 21.5962 7.81506 21.2188 8.21827L22.6789 9.58498ZM15.2688 9.82999L18.3663 12.7292L19.733 11.269L16.6355 8.36982L15.2688 9.82999ZM19.7797 12.6825L22.6789 9.58498L21.2188 8.21827L18.3195 11.3158L19.7797 12.6825Z" fill="#B0B0B0"/>
+<path d="M19 10C19 7.3345 17.8412 4.93964 16 3.29168C14.4077 1.86656 12.3051 1 10 1C5.02944 1 1 5.02944 1 10C1 14.9706 5.02944 19 10 19" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/>
+</svg>
+`;
+
+export const removeSVG = () => `
+<svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.86951 4.85181V17.2499C2.86951 19.4591 4.66037 21.2499 6.86951 21.2499H15.3695C17.5786 21.2499 19.3695 19.4591 19.3695 17.2499V4.85181" stroke="#B0B0B0" stroke-width="2"/>
+<line x1="1" y1="4.64392" x2="21" y2="4.64392" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/>
+<line x1="3.75" y1="1" x2="18.25" y2="1" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/>
+<path d="M8.25 9.33337V16.6667" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/>
+<path d="M13.75 9.33337V16.6667" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round"/>
+</svg>
+`;
+
+export const downloadSVG = () => `완료
 `;

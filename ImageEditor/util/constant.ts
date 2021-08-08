@@ -8,3 +8,5 @@ export const BUTTON_TITLE = {
 export const shapeList: ShapeType[] = ["rect", "circle", "triangle"];
 
 export const colorList = ["ffffff", "F24E1E", "FFC700", "0FA958", "699BF7", "9747FF", "D27C2C", "545454"];
+
+export const penSizeList = [4, 6, 8, 12, 14, 18];

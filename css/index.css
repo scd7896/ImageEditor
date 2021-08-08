@@ -91,9 +91,28 @@
 	border: 1px solid #f0f0f0;
 }
 
+.penWrapper {
+	width: 100%;
+	position: absolute;
+	height: 69px;
+	bottom: 70px;
+	left: 0;
+	border: 1px solid #f0f0f0;
+}
+
 .buttonWrapper {
 	display: flex;
 	justify-content: center;
+	width: 80%;
+	height: 100%;
+	border-right: 1px solid #f0f0f0;
+}
+
+.penSizeWrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 36px;
 	width: 80%;
 	height: 100%;
 	border-right: 1px solid #f0f0f0;
@@ -146,4 +165,9 @@
 
 .colorButton.selected {
 	border: 1px solid black;
+}
+
+.penSizeButton {
+	border-radius: 100%;
+	background: #dbdbdb;
 }
