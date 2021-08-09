@@ -75,7 +75,7 @@ class Canvas extends CanvasState {
 			this.canvas.freeDrawingBrush.color = nextState.selectedFillColor;
 			this.canvas.freeDrawingBrush.width = nextState.brushWidth;
 		}
-
+		console.log(nextState);
 		this.onStateUpdate && this.onStateUpdate(nextState);
 	}
 
@@ -129,6 +129,9 @@ class Canvas extends CanvasState {
 	}
 
 	drwaingModeOn() {
+		console.log(this.state.brushWidth);
+		this.canvas.freeDrawingBrush.color = this.state.selectedFillColor;
+		this.canvas.freeDrawingBrush.width = this.state.brushWidth;
 		this.canvas.isDrawingMode = true;
 	}
 

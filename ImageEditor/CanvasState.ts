@@ -1,15 +1,16 @@
-import { ICanvasState } from "../types/CanvasState";
+import { ICanvasState, IObserverState } from "../types/CanvasState";
 import { DEFAULT_COLOR, DEFAULT_WIDTH } from "./util/constant";
 
 const MAX_BRUSH_WIDTH = 16;
 const MIN_BRUSH_WIDTH = 0;
 abstract class CanvasState {
 	public state: ICanvasState;
+	private listners: IObserverState[];
 
 	constructor() {
+		this.listners = [];
 		this.setState({
 			selectedFillColor: DEFAULT_COLOR,
-			selectedWidth: DEFAULT_WIDTH,
 			brushWidth: DEFAULT_WIDTH,
 			mode: "normal",
 			selected: null,
@@ -38,9 +39,19 @@ abstract class CanvasState {
 			...args,
 		};
 
+		this.listners.map((listener) => listener.onStateUpdate(this.state));
+
 		if (this.didStateUpdate) {
 			this.didStateUpdate(this.state);
 		}
+	}
+
+	observe(listener: IObserverState) {
+		this.listners.push(listener);
+	}
+
+	unobserve(listener: IObserverState) {
+		this.listners = this.listners.filter((prev) => prev !== listener);
 	}
 
 	abstract didStateUpdate(args: ICanvasState): void;

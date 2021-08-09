@@ -1,8 +1,9 @@
+import { ICanvasState, IObserverState } from "../types/CanvasState";
 import Canvas from "./Canvas";
 import { colorList } from "./util/constant";
 import { findTargetElementByType } from "./util/events";
 
-class ColorPicker {
+class ColorPicker implements IObserverState {
 	canvas: Canvas;
 	colorToggleButton: HTMLDivElement;
 	colorPickerWrapper: HTMLDivElement;
@@ -15,7 +16,7 @@ class ColorPicker {
 		colorToggleButton.style.background = this.canvas.state.selectedFillColor;
 		this.colorToggleButton = colorToggleButton;
 		colorToggleButton.addEventListener("click", () => {
-			this.onToggleColorPicker(this.colorPickerWrapper.style.display === "none");
+			this.canvas.setState({ viewSelectColorPicker: !this.canvas.state.viewSelectColorPicker });
 		});
 
 		const colorPickerWrapper = document.createElement("div");
@@ -48,6 +49,7 @@ class ColorPicker {
 		colorPickerWrapper.appendChild(colorWrapper);
 		canvasWrapper.appendChild(colorPickerWrapper);
 		toggleButtonWrapper.appendChild(colorToggleButton);
+		this.canvas.observe(this);
 	}
 
 	createColors(wrapper: HTMLDivElement) {
@@ -64,12 +66,13 @@ class ColorPicker {
 		});
 	}
 
-	onToggleColorPicker(state: boolean) {
-		if (state) {
+	onStateUpdate(state: ICanvasState) {
+		if (state.viewSelectColorPicker) {
 			this.colorPickerWrapper.style.display = "block";
 		} else {
 			this.colorPickerWrapper.style.display = "none";
 		}
+		this.colorToggleButton.style.background = state.selectedFillColor;
 	}
 }
 
