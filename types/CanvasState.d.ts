@@ -6,6 +6,9 @@ export interface ICanvasState {
 	brushWidth?: number;
 	selected?: fabric.Object[] | null;
 	viewSelectColorPicker?: boolean;
+	canUndo?: boolean;
+	canRedo?: boolean;
+	canDelete?: boolean;
 }
 export interface IObserverState {
 	onStateUpdate: (nextState: ICanvasState) => void;

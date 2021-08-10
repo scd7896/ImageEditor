@@ -15,7 +15,7 @@ import Pen from "./Pen";
 import PenEvent from "./events/PenEvent";
 
 const footerButtons = ["shape", "pen", "sticker"];
-const headerButtons = ["close", "undo", "redo", "reset", "remove", "download"];
+const headerButtons = ["close", "undo", "redo", "remove", "download"];
 class ImageEditor {
 	private canvas: Canvas;
 	private option: any;
@@ -71,6 +71,7 @@ class ImageEditor {
 	}
 
 	onStateUpdate(nextState: ICanvasState) {
+		if (!this.shapeWrapper || !this.stickerWrapper || !this.penWrapper) return;
 		switch (nextState.mode) {
 			case "shape": {
 				this.shapeWrapper.style.display = "flex";
@@ -189,7 +190,8 @@ class ImageEditor {
 		headerOptionWrapper.classList.add("headerOptionWrapper");
 		const options = new Options(this.option, this.canvas, this.wrapper);
 		this.footerOptionTools = new ToolButtons(options, optionWrapper, footerButtons);
-		new ToolButtons(options, headerOptionWrapper, headerButtons);
+		const headerOption = new ToolButtons(options, headerOptionWrapper, headerButtons);
+		this.canvas.observe(headerOption);
 		optionWrapper.addEventListener("click", this.optionWrapperClickListener.bind(this));
 		this.wrapper.appendChild(optionWrapper);
 		this.headerDiv.appendChild(headerOptionWrapper);

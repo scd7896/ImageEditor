@@ -62,6 +62,7 @@ class Canvas extends CanvasState {
 		this.onStateUpdate = onStateUpdate;
 
 		this.selectedEvent();
+		this.historyEvent();
 
 		this.addRect = this.addRect.bind(this);
 	}
@@ -75,8 +76,21 @@ class Canvas extends CanvasState {
 			this.canvas.freeDrawingBrush.color = nextState.selectedFillColor;
 			this.canvas.freeDrawingBrush.width = nextState.brushWidth;
 		}
-		console.log(nextState);
+
 		this.onStateUpdate && this.onStateUpdate(nextState);
+	}
+
+	historyEvent() {
+		const historyEvent = () => {
+			console.log("historyEvent", this.undoHistoryLength);
+			this.setState({
+				canUndo: this.undoHistoryLength > 0,
+				canRedo: this.redoHistoryLength > 0,
+			});
+		};
+		this.canvas.on("history:append", historyEvent.bind(this));
+		this.canvas.on("history:undo", historyEvent.bind(this));
+		this.canvas.on("history:redo", historyEvent.bind(this));
 	}
 
 	selectedEvent() {
@@ -129,7 +143,6 @@ class Canvas extends CanvasState {
 	}
 
 	drwaingModeOn() {
-		console.log(this.state.brushWidth);
 		this.canvas.freeDrawingBrush.color = this.state.selectedFillColor;
 		this.canvas.freeDrawingBrush.width = this.state.brushWidth;
 		this.canvas.isDrawingMode = true;
@@ -207,6 +220,7 @@ class Canvas extends CanvasState {
 
 	clearHistory() {
 		this.canvas.clearHistory();
+		this.canvas.fire("history:undo");
 	}
 
 	on(event, handler) {
