@@ -190,7 +190,7 @@ class ImageEditor {
 		headerOptionWrapper.classList.add("headerOptionWrapper");
 		const options = new Options(this.option, this.canvas, this.wrapper);
 		this.footerOptionTools = new ToolButtons(options, optionWrapper, footerButtons);
-		const headerOption = new ToolButtons(options, headerOptionWrapper, headerButtons);
+		const headerOption = new ToolButtons(options, headerOptionWrapper, headerButtons, true);
 		this.canvas.observe(headerOption);
 		optionWrapper.addEventListener("click", this.optionWrapperClickListener.bind(this));
 		this.wrapper.appendChild(optionWrapper);

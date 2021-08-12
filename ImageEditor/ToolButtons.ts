@@ -5,13 +5,16 @@ import Options from "./Options";
 export default class ToolButtons implements IObserverState {
 	private optionWrapper: HTMLDivElement;
 	private option: Options;
-	private buttons: any;
+	private buttons: string[];
+	private isHead?: boolean;
 	constructor(
 		option: Options,
 		optionWrapper: HTMLDivElement,
-		buttons: string[] = ["rect", "color", "pen", "undo", "redo", "download", "reset", "remove", "sticker"]
+		buttons: string[] = ["rect", "color", "pen", "undo", "redo", "download", "reset", "remove", "sticker"],
+		isHead?: boolean
 	) {
-		this.buttons = {};
+		this.isHead = isHead;
+		this.buttons = buttons;
 		this.optionWrapper = optionWrapper;
 		this.option = option;
 		this.optionWrapper = optionWrapper;
@@ -21,14 +24,36 @@ export default class ToolButtons implements IObserverState {
 	}
 
 	onStateUpdate(nextState: ICanvasState) {
-		this.buttons.redo = this.createButton("redo", nextState.canRedo);
-		this.buttons.undo = this.createButton("undo", nextState.canUndo);
-		console.log(this.buttons.undo, nextState.canUndo);
-		this.buttons.remove = this.createButton("remove", nextState.canDelete);
+		console.log(nextState.canDelete);
+		if (this.isHead) {
+			while (this.optionWrapper.childNodes.length) {
+				this.optionWrapper.childNodes.item(0).remove();
+			}
+			this.buttons.map((button) => {
+				switch (button) {
+					case "remove": {
+						this[button](nextState.canDelete);
+						break;
+					}
+					case "undo": {
+						this[button](nextState.canUndo);
+						break;
+					}
+					case "redo": {
+						this[button](nextState.canRedo);
+						break;
+					}
+					default: {
+						this[button]();
+					}
+				}
+			});
+		}
 	}
 
 	rerenderOptionTools(mode: Mode, selected: boolean) {
 		const button = document.createElement("button");
+
 		button.classList.add("option-button");
 		const iconName = `${mode}SVG`;
 		if (icons[iconName]) {
@@ -51,8 +76,10 @@ export default class ToolButtons implements IObserverState {
 		const button = document.createElement("button");
 		button.classList.add("option-button");
 		const iconName = `${title}SVG`;
+
 		if (icons[iconName]) {
 			const text = icons[iconName](isSelected);
+
 			button.innerHTML = text;
 		}
 
@@ -67,7 +94,7 @@ export default class ToolButtons implements IObserverState {
 				button.dataset.type = "bottomMenu";
 				button.dataset.mode = title;
 		}
-		this.buttons[title] = button;
+
 		return button;
 	}
 
@@ -76,14 +103,14 @@ export default class ToolButtons implements IObserverState {
 		this.optionWrapper.appendChild(button);
 	}
 
-	undo() {
-		const button = this.createButton("undo");
+	undo(isSelected?: boolean) {
+		const button = this.createButton("undo", isSelected);
 		this.optionWrapper.appendChild(button);
 		button.addEventListener("click", this.option.undoClick.bind(this.option));
 	}
 
-	redo() {
-		const button = this.createButton("redo");
+	redo(isSelected?: boolean) {
+		const button = this.createButton("redo", isSelected);
 		this.optionWrapper.appendChild(button);
 		button.addEventListener("click", this.option.redoClick.bind(this.option));
 	}
@@ -116,8 +143,8 @@ export default class ToolButtons implements IObserverState {
 		button.addEventListener("click", this.option.resetButtonClick.bind(this.option));
 	}
 
-	remove() {
-		const button = this.createButton("remove");
+	remove(isSelected?: boolean) {
+		const button = this.createButton("remove", isSelected);
 		this.optionWrapper.appendChild(button);
 		button.addEventListener("click", this.option.deleteClick.bind(this.option));
 	}

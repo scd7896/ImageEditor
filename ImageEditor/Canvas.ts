@@ -82,7 +82,6 @@ class Canvas extends CanvasState {
 
 	historyEvent() {
 		const historyEvent = () => {
-			console.log("historyEvent", this.undoHistoryLength);
 			this.setState({
 				canUndo: this.undoHistoryLength > 0,
 				canRedo: this.redoHistoryLength > 0,
@@ -96,9 +95,12 @@ class Canvas extends CanvasState {
 	selectedEvent() {
 		function handleSelect(obj: any) {
 			obj.selected.forEach((o) => this.canvas.bringForward(o));
-			this.setState({ ...this.state, selected: obj.selected });
+			this.setState({ ...this.state, selected: obj.selected, canDelete: obj.selected.length > 0 });
 		}
 
+		this.canvas.on("selection:cleared", () => {
+			this.setState({ ...this.state, selected: undefined, canDelete: false });
+		});
 		this.canvas.on("selection:updated", handleSelect.bind(this));
 		this.canvas.on("selection:created", handleSelect.bind(this));
 	}
