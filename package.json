@@ -1,15 +1,13 @@
 {
-  "name": "imageeditor",
+  "name": "mobile-image-editor",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "only mobile web image-editor",
+  "main": "dist/image-editor.min.js",
   "scripts": {
     "watch": "webpack --watch",
     "serve": "http-server -p 9090 ./",
     "build": "webpack --env=production"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "fabric": "^4.4.0",
     "fabric-history": "^1.6.0",
@@ -26,5 +24,36 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.31.2",
     "webpack-cli": "^4.6.0"
+  },
+  "licenses": [{
+    "type": "MIT",
+    "url": "https://www.opensource.org/licenses/mit-license.php"
+  }],
+  "keywords": [
+    "mobile-editor",
+    "image-editor",
+    "image",
+    "editor",
+    "mobile-web-editor"
+  ],
+  "homepage": "https://github.com/scd7896/ImageEditor",
+  "bugs": {
+    "url": "https://github.com/scd7896/ImageEditor/issues",
+    "email": "scd7896@gmail.com"
+  },
+  "author": {
+    "name": "Kim SerVer",
+    "email": "scd7896@gmail.com"
+  },
+  "contributors": [
+    ""
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scd7896/ImageEditor.git"
+  },
+  "engines": {
+    "node": ">=16.1.0",
+    "npm" : ">=7.11.2"
   }
 }
