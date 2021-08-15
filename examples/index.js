@@ -1,6 +1,6 @@
 import ImageEditor from "./ImageEditor/ImageEditor";
 
-const init = (id: HTMLDivElement | string, options) => {
+const init = (id, options) => {
 	const Editor = new ImageEditor(id, options);
 };
 
@@ -15,7 +15,7 @@ init("canvas-example", {
 		"/assets/face.png",
 	],
 	events: {
-		onFinish: async (blob: Blob) => {
+		onFinish: async (blob) => {
 			const file = new File([blob], "file.jpg", { type: "image/jpeg" });
 			const url = URL.createObjectURL(file);
 			const a = document.createElement("a");
@@ -24,7 +24,7 @@ init("canvas-example", {
 			a.click();
 			URL.revokeObjectURL(url);
 		},
-		onCancel: async (blob: Blob) => {
+		onCancel: async (blob) => {
 			const file = new File([blob], "file.jpg", { type: "image/jpeg" });
 			const url = URL.createObjectURL(file);
 			const a = document.createElement("a");

@@ -6,7 +6,7 @@ module.exports = function (env, args) {
 			filename: "./image-editor.min.js",
 			libraryTarget: "commonjs",
 		},
-		entry: "./index.ts",
+		entry: "./lib/ImageEditor/ImageEditor.ts",
 		resolve: {
 			extensions: [".ts", ".tsx", ".js", ".css", ".scss"],
 		},
