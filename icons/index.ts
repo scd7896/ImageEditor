@@ -108,5 +108,4 @@ export const removeSVG = (isSelected) => `
 </svg>
 `;
 
-export const downloadSVG = () => `완료
-`;
+export const downloadSVG = () => `done`;

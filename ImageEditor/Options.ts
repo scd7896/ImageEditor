@@ -37,8 +37,8 @@ class Options {
 
 	exportsClick() {
 		const blob = this.canvas.getImage();
-		if (this.option.events.onDownLoad) {
-			this.option.events.onDownLoad(blob);
+		if (this.option.events.onFinish) {
+			this.option.events.onFinish(blob);
 		}
 	}
 
@@ -46,15 +46,12 @@ class Options {
 		this.canvas.resetCanvas();
 	}
 
-	imageLoadClick() {}
-
 	downLoadClick() {
 		const blob = this.canvas.getImage();
-		if (this.option.events?.onDownLoad) {
-			this.option.events.onDownLoad(blob);
-		} else {
-			this.canvas.downloadImage();
+		if (this.option.events?.onFinish) {
+			this.option.events.onFinish(blob);
 		}
+		this.rootElement.parentNode.removeChild(this.rootElement);
 	}
 
 	deleteClick() {
@@ -69,10 +66,9 @@ class Options {
 
 	closeClick() {
 		if (this.option.events.onCancel) {
-			this.option.events.onCancel();
-		} else {
-			this.rootElement.parentNode.removeChild(this.rootElement);
+			this.option.events.onCancel(this.canvas.defaultImage);
 		}
+		this.rootElement.parentNode.removeChild(this.rootElement);
 	}
 }
 

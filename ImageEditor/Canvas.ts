@@ -47,6 +47,7 @@ class Canvas extends CanvasState {
 	private scrollPoint: ScrollPoint;
 	private resorceCanvas: HTMLCanvasElement;
 	private onStateUpdate: Function;
+	public defaultImage: Blob;
 
 	constructor(
 		canvas: HTMLCanvasElement,
@@ -166,6 +167,12 @@ class Canvas extends CanvasState {
 
 	getJson() {
 		return this.canvas.toJSON();
+	}
+
+	async setDefaultImage(img: HTMLImageElement) {
+		const response = await fetch(img.src);
+		const image = await response.blob();
+		this.defaultImage = image;
 	}
 
 	addImage(img: HTMLImageElement, options?: { top?: number; left?: number; selectable?: boolean }) {

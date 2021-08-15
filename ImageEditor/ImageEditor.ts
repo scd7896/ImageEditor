@@ -228,6 +228,7 @@ class ImageEditor {
 			initImage.onload = () => {
 				this.canvas.addImage(initImage, { selectable: false });
 				this.canvas.clearHistory();
+				this.canvas.setDefaultImage(initImage);
 				this.toCenterScroll();
 				this.createStickerWrapper.call(this);
 				this.createShapeWrapper.call(this);
