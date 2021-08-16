@@ -1,6 +1,6 @@
 {
   "name": "mobile-image-editor",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "only mobile web image-editor",
   "main": "./dist/image-editor.min.js",
   "scripts": {
