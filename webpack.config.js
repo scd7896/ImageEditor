@@ -4,12 +4,16 @@ module.exports = function (env, args) {
 		output: {
 			filename: "./image-editor.min.js",
 		},
-		entry: "./lib/ImageEditor/ImageEditor.ts",
+		entry: "./index.js",
 		resolve: {
 			extensions: [".ts", ".tsx", ".js", ".css", ".scss"],
 		},
 		module: {
 			rules: [
+				{
+					test: /.js$/,
+					use: ["babel-loader"],
+				},
 				{
 					test: /\.ts(x?)$/,
 					use: ["babel-loader", "ts-loader"],

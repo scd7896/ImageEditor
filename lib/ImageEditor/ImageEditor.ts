@@ -30,7 +30,7 @@ class ImageEditor {
 
 	private imgUrl: string;
 
-	constructor(wrapper: string | HTMLDivElement, options) {
+	constructor(wrapper: string | HTMLDivElement, options: IOption) {
 		let target: HTMLDivElement;
 
 		this.option = options;

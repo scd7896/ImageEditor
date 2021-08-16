@@ -2,7 +2,7 @@ declare module "*.png";
 declare module "*.svg";
 interface IOption {
 	baseImage: string;
-	stickers: string[];
+	images: string[];
 	events: {
 		onFinish?: (blob?: Blob) => void;
 		onCancel?: (blob?: Blob) => void;
