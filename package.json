@@ -1,6 +1,6 @@
 {
   "name": "mobile-image-editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "only mobile web image-editor",
   "main": "dist/image-editor.min.js",
   "scripts": {
@@ -25,10 +25,12 @@
     "webpack": "^5.31.2",
     "webpack-cli": "^4.6.0"
   },
-  "licenses": [{
-    "type": "MIT",
-    "url": "https://www.opensource.org/licenses/mit-license.php"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
   "keywords": [
     "mobile-editor",
     "image-editor",
@@ -54,6 +56,6 @@
   },
   "engines": {
     "node": ">=16.1.0",
-    "npm" : ">=7.11.2"
+    "npm": ">=7.11.2"
   }
 }
