@@ -3,7 +3,7 @@ module.exports = function (env, args) {
 		mode: env.production ? "production" : "development",
 		output: {
 			filename: "./image-editor.min.js",
-			libraryTarget: "umd",
+			libraryTarget: "commonjs",
 		},
 		entry: "./lib/ImageEditor/ImageEditor",
 		resolve: {
