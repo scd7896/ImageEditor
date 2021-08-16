@@ -1,10 +1,8 @@
 module.exports = function (env, args) {
 	return {
 		mode: env.production ? "production" : "development",
-		devtool: env.production ? "source-map" : "eval",
 		output: {
 			filename: "./image-editor.min.js",
-			libraryTarget: "commonjs",
 		},
 		entry: "./lib/ImageEditor/ImageEditor.ts",
 		resolve: {
@@ -15,7 +13,7 @@ module.exports = function (env, args) {
 				{
 					test: /\.ts(x?)$/,
 					use: ["babel-loader", "ts-loader"],
-					exclude: ["/node_modules", "/index.ts"],
+					exclude: ["/node_modules"],
 				},
 				{
 					test: /\.(png|jpe?g|gif|svg)$/i,

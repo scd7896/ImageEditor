@@ -1,7 +1,6 @@
-import ImageEditor from "./ImageEditor/ImageEditor";
-
 const init = (id, options) => {
 	const Editor = new ImageEditor(id, options);
+	console.log(Editor);
 };
 
 init("canvas-example", {

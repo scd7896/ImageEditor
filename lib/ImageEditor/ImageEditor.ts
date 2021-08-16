@@ -239,4 +239,6 @@ class ImageEditor {
 	}
 }
 
+window.ImageEditor = ImageEditor;
+
 export default ImageEditor;
