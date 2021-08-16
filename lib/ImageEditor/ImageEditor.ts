@@ -16,7 +16,7 @@ import PenEvent from "./events/PenEvent";
 
 const footerButtons = ["shape", "pen", "sticker"];
 const headerButtons = ["close", "undo", "redo", "remove", "download"];
-class ImageEditor {
+export class ImageEditor {
 	private canvas: Canvas;
 	private option: any;
 	private stickerWrapper: HTMLDivElement;
