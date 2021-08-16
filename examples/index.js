@@ -1,4 +1,5 @@
 const init = (id, options) => {
+	console.log(ImageEditor);
 	const Editor = new ImageEditor(id, options);
 	console.log(Editor);
 };

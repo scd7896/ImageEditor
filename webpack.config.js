@@ -4,7 +4,7 @@ module.exports = function (env, args) {
 		output: {
 			filename: "./image-editor.min.js",
 		},
-		entry: "./index.js",
+		entry: "./lib/ImageEditor/ImageEditor",
 		resolve: {
 			extensions: [".ts", ".tsx", ".js", ".css", ".scss"],
 		},
