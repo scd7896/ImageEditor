@@ -68,3 +68,7 @@ const ImageInput = () => {
 
 export default ImageInput;
 ```
+
+# author
+- Developer: Kim Server (scd7896@gmail.com)
+- Designer: MJ Jang (https://mjjang.myportfolio.com/work)
