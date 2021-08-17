@@ -5,13 +5,13 @@ const init = (id, options) => {
 };
 
 init("canvas-example", {
-	baseImage: "/assets/sample.png",
+	baseImage: "https://scd7896.github.io/ImageEditor/assets/sample.png",
 	images: [
-		"/assets/sticker1.png",
-		"/assets/sticker2.png",
-		"/assets/sticker3.png",
-		"/assets/sticker4.png",
-		"/assets/sticker5.png",
+		"https://scd7896.github.io/ImageEditor/assets/sticker1.png",
+		"https://scd7896.github.io/ImageEditor/assets/sticker2.png",
+		"https://scd7896.github.io/ImageEditor/assets/sticker3.png",
+		"https://scd7896.github.io/ImageEditor/assets/sticker4.png",
+		"https://scd7896.github.io/ImageEditor/assets/sticker5.png",
 	],
 	events: {
 		onFinish: async (blob) => {
