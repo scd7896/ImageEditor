@@ -1,6 +1,6 @@
 export const shapeSVG = (
 	isSelected: boolean
-) => `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+) => `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 <mask id="path-1-inside-1" fill="white">
 	<path
 		fillRule="evenodd"
@@ -28,7 +28,7 @@ export const penSVG = (isSelected?: boolean) => `
 `;
 
 export const stickerSVG = (isSelected?: boolean) => `
-<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M13.88 23.08H5C2.79086 23.08 1 21.2891 1 19.08V5C1 2.79086 2.79086 1 5 1H19.08C21.2891 1 23.08 2.79086 23.08 5V13.88" stroke=${
 	isSelected ? "#333333" : "#B0B0B0"
 } stroke-width="2"/>

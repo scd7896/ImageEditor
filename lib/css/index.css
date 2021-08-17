@@ -19,6 +19,8 @@
 	width: 100%;
 	display: flex;
 	justify-content: space-around;
+	align-items: center;
+	border-top: 1px solid #f0f0f0;
 }
 
 .canvas-wrapper {
@@ -92,18 +94,18 @@
 	width: 100%;
 	position: absolute;
 	height: 69px;
-	bottom: 70px;
+	bottom: 65px;
 	left: 0;
-	border: 1px solid #f0f0f0;
+	border-top: 1px solid #f0f0f0;
 }
 
 .penWrapper {
 	width: 100%;
 	position: absolute;
 	height: 69px;
-	bottom: 70px;
+	bottom: 65px;
 	left: 0;
-	border: 1px solid #f0f0f0;
+	border-top: 1px solid #f0f0f0;
 }
 
 .buttonWrapper {
