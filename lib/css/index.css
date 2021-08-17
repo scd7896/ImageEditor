@@ -18,8 +18,7 @@
 	height: 64px;
 	width: 100%;
 	display: flex;
-	justify-content: space-between;
-	padding: 0 15%;
+	justify-content: space-around;
 }
 
 .canvas-wrapper {
@@ -82,7 +81,11 @@
 }
 
 .button-title {
-	margin-top: 8px;
+	margin-top: 4px;
+}
+
+.button-title.pen {
+	margin-top: 2px;
 }
 
 .shapeWrapper {

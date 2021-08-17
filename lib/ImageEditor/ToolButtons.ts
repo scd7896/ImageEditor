@@ -89,6 +89,7 @@ export default class ToolButtons implements IObserverState {
 			case "sticker":
 				const span = document.createElement("span");
 				span.classList.add("button-title");
+				span.classList.add(title);
 				span.textContent = title;
 				button.appendChild(span);
 				button.dataset.type = "bottomMenu";
