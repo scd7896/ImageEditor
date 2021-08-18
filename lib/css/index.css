@@ -9,6 +9,7 @@
 	flex-direction: column;
 	align-items: center;
 	background-color: white;
+	touch-action: manipulation;
 }
 
 .optionWrapper {
