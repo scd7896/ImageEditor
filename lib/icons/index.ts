@@ -93,19 +93,24 @@ export const resetSVG = () => `
 `;
 
 export const removeSVG = (isSelected) => `
-<svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M2.86951 4.85181V17.2499C2.86951 19.4591 4.66037 21.2499 6.86951 21.2499H15.3695C17.5786 21.2499 19.3695 19.4591 19.3695 17.2499V4.85181" stroke=${
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 6V20C3 21.6569 4.34315 23 6 23H18C19.6569 23 21 21.6569 21 20V6" stroke=${
 	isSelected ? "#B0B0B0" : "#E9E9E9"
 } stroke-width="2"/>
-<line x1="1" y1="4.64392" x2="21" y2="4.64392" stroke=${
+<line x1="1" y1="5" x2="23" y2="5" stroke=${
 	isSelected ? "#B0B0B0" : "#E9E9E9"
 } stroke-width="2" stroke-linecap="round"/>
-<line x1="3.75" y1="1" x2="18.25" y2="1" stroke=${
+<path d="M7 2C7 1.44772 7.44772 1 8 1H16C16.5523 1 17 1.44772 17 2V5H7V2Z" stroke=${
+	isSelected ? "#B0B0B0" : "#E9E9E9"
+} stroke-width="2"/>
+<line x1="9" y1="9" x2="9" y2="19" stroke=${
 	isSelected ? "#B0B0B0" : "#E9E9E9"
 } stroke-width="2" stroke-linecap="round"/>
-<path d="M8.25 9.33337V16.6667" stroke=${isSelected ? "#B0B0B0" : "#E9E9E9"} stroke-width="2" stroke-linecap="round"/>
-<path d="M13.75 9.33337V16.6667" stroke=${isSelected ? "#B0B0B0" : "#E9E9E9"} stroke-width="2" stroke-linecap="round"/>
+<line x1="15" y1="9" x2="15" y2="19" stroke=${
+	isSelected ? "#B0B0B0" : "#E9E9E9"
+} stroke-width="2" stroke-linecap="round"/>
 </svg>
+
 `;
 
-export const doneSVG = () => `done`;
+export const doneSVG = () => `Done`;
