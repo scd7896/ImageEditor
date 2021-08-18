@@ -24,7 +24,6 @@ export default class ToolButtons implements IObserverState {
 	}
 
 	onStateUpdate(nextState: ICanvasState) {
-		console.log(nextState.canDelete);
 		if (this.isHead) {
 			while (this.optionWrapper.childNodes.length) {
 				this.optionWrapper.childNodes.item(0).remove();
@@ -75,6 +74,7 @@ export default class ToolButtons implements IObserverState {
 	createButton(title, isSelected?: boolean) {
 		const button = document.createElement("button");
 		button.classList.add("option-button");
+		button.classList.add(title);
 		const iconName = `${title}SVG`;
 
 		if (icons[iconName]) {
@@ -116,8 +116,8 @@ export default class ToolButtons implements IObserverState {
 		button.addEventListener("click", this.option.redoClick.bind(this.option));
 	}
 
-	download() {
-		const button = this.createButton("download");
+	done() {
+		const button = this.createButton("done");
 		this.optionWrapper.appendChild(button);
 		button.addEventListener("click", this.option.downLoadClick.bind(this.option));
 	}
