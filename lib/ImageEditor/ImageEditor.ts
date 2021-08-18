@@ -173,11 +173,12 @@ class ImageEditor {
 		const target = findTargetElementByType(event.target, "bottomMenu");
 		if (target) {
 			const mode = target.dataset.mode as Mode;
+
 			const parent = target.parentElement;
 
 			this.canvas.drwaingModeOff();
 			this.canvas.setState({
-				mode,
+				mode: this.canvas.state.mode === mode ? "normal" : mode,
 				viewSelectColorPicker: false,
 			});
 			parent.innerHTML = "";

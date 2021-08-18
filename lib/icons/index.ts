@@ -40,7 +40,7 @@ export const stickerSVG = (isSelected?: boolean) => `
 
 export const closeSVG = () => `
 <svg width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.7071 1.70711C11.0976 1.31658 11.0976 0.683417 10.7071 0.292893C10.3166 -0.0976311 9.68342 -0.0976311 9.29289 0.292893L10.7071 1.70711ZM1 10L0.292893 9.29289C-0.0976311 9.68342 -0.0976311 10.3166 0.292893 10.7071L1 10ZM9.29289 19.7071C9.68342 20.0976 10.3166 20.0976 10.7071 19.7071C11.0976 19.3166 11.0976 18.6834 10.7071 18.2929L9.29289 19.7071ZM9.29289 0.292893L0.292893 9.29289L1.70711 10.7071L10.7071 1.70711L9.29289 0.292893ZM0.292893 10.7071L9.29289 19.7071L10.7071 18.2929L1.70711 9.29289L0.292893 10.7071Z" fill="black"/>
+<path d="M10.7071 1.70711C11.0976 1.31658 11.0976 0.683417 10.7071 0.292893C10.3166 -0.0976311 9.68342 -0.0976311 9.29289 0.292893L10.7071 1.70711ZM1 10L0.292893 9.29289C-0.0976311 9.68342 -0.0976311 10.3166 0.292893 10.7071L1 10ZM9.29289 19.7071C9.68342 20.0976 10.3166 20.0976 10.7071 19.7071C11.0976 19.3166 11.0976 18.6834 10.7071 18.2929L9.29289 19.7071ZM9.29289 0.292893L0.292893 9.29289L1.70711 10.7071L10.7071 1.70711L9.29289 0.292893ZM0.292893 10.7071L9.29289 19.7071L10.7071 18.2929L1.70711 9.29289L0.292893 10.7071Z" fill="#B0B0B0"/>
 </svg>
 `;
 
@@ -65,11 +65,11 @@ export const triangleSVG = () => `
 export const undoSVG = (isSelected) => `
 <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M14 20C17.866 20 21 16.866 21 13C21 9.13401 17.866 6 14 6" stroke=${
-	isSelected ? "#333333" : "#B0B0B0"
+	isSelected ? "#B0B0B0" : "#E9E9E9"
 } stroke-width="2" stroke-linecap="round"/>
-<path d="M15 6L3 6" stroke=${isSelected ? "#333333" : "#B0B0B0"} stroke-width="2" stroke-linecap="round"/>
+<path d="M15 6L3 6" stroke=${isSelected ? "#B0B0B0" : "#E9E9E9"} stroke-width="2" stroke-linecap="round"/>
 <path d="M6.70711 10.2929C7.09763 10.6834 7.09763 11.3166 6.70711 11.7071C6.31658 12.0976 5.68342 12.0976 5.29289 11.7071L6.70711 10.2929ZM1 6L0.292893 6.70711C-0.0976315 6.31658 -0.0976316 5.68342 0.292893 5.29289L1 6ZM5.29289 0.292893C5.68342 -0.0976319 6.31658 -0.0976319 6.70711 0.292893C7.09763 0.683417 7.09763 1.31658 6.70711 1.70711L5.29289 0.292893ZM5.29289 11.7071L0.292893 6.70711L1.70711 5.29289L6.70711 10.2929L5.29289 11.7071ZM0.292893 5.29289L5.29289 0.292893L6.70711 1.70711L1.70711 6.70711L0.292893 5.29289Z" fill=${
-	isSelected ? "#333333" : "#B0B0B0"
+	isSelected ? "#B0B0B0" : "#E9E9E9"
 } />
 </svg>
 `;
@@ -77,11 +77,11 @@ export const undoSVG = (isSelected) => `
 export const redoSVG = (isSelected) => `
 <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8 20C4.13401 20 1 16.866 1 13C1 9.13401 4.13401 6 8 6" stroke=${
-	isSelected ? "#333333" : "#B0B0B0"
+	isSelected ? "#B0B0B0" : "#E9E9E9"
 } stroke-width="2" stroke-linecap="round"/>
-<path d="M7 6L19 6" stroke=${isSelected ? "#333333" : "#B0B0B0"} stroke-width="2" stroke-linecap="round"/>
+<path d="M7 6L19 6" stroke=${isSelected ? "#B0B0B0" : "#E9E9E9"} stroke-width="2" stroke-linecap="round"/>
 <path d="M15.2929 1.70711C14.9024 1.31658 14.9024 0.683418 15.2929 0.292894C15.6834 -0.0976306 16.3166 -0.0976307 16.7071 0.292894L15.2929 1.70711ZM21 6L21.7071 5.29289C22.0976 5.68342 22.0976 6.31658 21.7071 6.70711L21 6ZM16.7071 11.7071C16.3166 12.0976 15.6834 12.0976 15.2929 11.7071C14.9024 11.3166 14.9024 10.6834 15.2929 10.2929L16.7071 11.7071ZM16.7071 0.292894L21.7071 5.29289L20.2929 6.70711L15.2929 1.70711L16.7071 0.292894ZM21.7071 6.70711L16.7071 11.7071L15.2929 10.2929L20.2929 5.29289L21.7071 6.70711Z" fill=${
-	isSelected ? "#333333" : "#B0B0B0"
+	isSelected ? "#B0B0B0" : "#E9E9E9"
 } />
 </svg>
 `;
@@ -95,16 +95,16 @@ export const resetSVG = () => `
 export const removeSVG = (isSelected) => `
 <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M2.86951 4.85181V17.2499C2.86951 19.4591 4.66037 21.2499 6.86951 21.2499H15.3695C17.5786 21.2499 19.3695 19.4591 19.3695 17.2499V4.85181" stroke=${
-	isSelected ? "#333333" : "#B0B0B0"
+	isSelected ? "#B0B0B0" : "#E9E9E9"
 } stroke-width="2"/>
 <line x1="1" y1="4.64392" x2="21" y2="4.64392" stroke=${
-	isSelected ? "#333333" : "#B0B0B0"
+	isSelected ? "#B0B0B0" : "#E9E9E9"
 } stroke-width="2" stroke-linecap="round"/>
 <line x1="3.75" y1="1" x2="18.25" y2="1" stroke=${
-	isSelected ? "#333333" : "#B0B0B0"
+	isSelected ? "#B0B0B0" : "#E9E9E9"
 } stroke-width="2" stroke-linecap="round"/>
-<path d="M8.25 9.33337V16.6667" stroke=${isSelected ? "#333333" : "#B0B0B0"} stroke-width="2" stroke-linecap="round"/>
-<path d="M13.75 9.33337V16.6667" stroke=${isSelected ? "#333333" : "#B0B0B0"} stroke-width="2" stroke-linecap="round"/>
+<path d="M8.25 9.33337V16.6667" stroke=${isSelected ? "#B0B0B0" : "#E9E9E9"} stroke-width="2" stroke-linecap="round"/>
+<path d="M13.75 9.33337V16.6667" stroke=${isSelected ? "#B0B0B0" : "#E9E9E9"} stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
 
