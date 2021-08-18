@@ -18,11 +18,9 @@ class PenEvent {
 
 			this.canvas.setState({
 				brushWidth: parseInt(target.dataset.width, 10) / 2,
-				mode: "normal",
 				viewSelectColorPicker: false,
 			});
 			target.children.item(0).classList.add("selected");
-			this.canvas.drwaingModeOn();
 		}
 	}
 }

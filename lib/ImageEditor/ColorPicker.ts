@@ -31,6 +31,10 @@ class ColorPicker implements IObserverState {
 			const target = findTargetElementByType(e.target as HTMLDivElement, "button");
 			if (target) {
 				this.colorToggleButton.style.background = target.style.background;
+				this.canvas.state.selected?.map((cl) => {
+					cl.set("fill", `#${target.dataset.color}`);
+					cl.set("stroke", `#${target.dataset.color}`);
+				});
 				this.canvas.setState({
 					selectedFillColor: target.style.background,
 				});
@@ -39,6 +43,7 @@ class ColorPicker implements IObserverState {
 					const children = parent.children.item(i);
 					if (children) children.classList.remove("selected");
 				}
+
 				target.classList.add("selected");
 			}
 		});
@@ -62,6 +67,7 @@ class ColorPicker implements IObserverState {
 			colorButton.style.background = `#${color}`;
 			colorButton.dataset.type = "button";
 			colorButton.dataset.color = color;
+
 			wrapper.appendChild(colorButton);
 		});
 	}

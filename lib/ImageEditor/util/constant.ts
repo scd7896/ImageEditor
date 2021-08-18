@@ -1,5 +1,5 @@
 export const DEFAULT_COLOR = "#545454";
-export const DEFAULT_WIDTH = 1;
+export const DEFAULT_WIDTH = 4;
 export const BUTTON_TITLE = {
 	pen: "펜",
 	sticker: "스티커",

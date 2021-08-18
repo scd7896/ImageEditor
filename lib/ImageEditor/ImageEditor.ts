@@ -15,7 +15,7 @@ import Pen from "./Pen";
 import PenEvent from "./events/PenEvent";
 
 const footerButtons = ["shape", "pen", "sticker"];
-const headerButtons = ["close", "undo", "redo", "remove", "download"];
+const headerButtons = ["close", "undo", "redo", "remove", "done"];
 class ImageEditor {
 	private canvas: Canvas;
 	private option: any;
@@ -74,12 +74,14 @@ class ImageEditor {
 		if (!this.shapeWrapper || !this.stickerWrapper || !this.penWrapper) return;
 		switch (nextState.mode) {
 			case "shape": {
+				this.canvas.drwaingModeOff();
 				this.shapeWrapper.style.display = "flex";
 				this.stickerWrapper.style.display = "none";
 				this.penWrapper.style.display = "none";
 				break;
 			}
 			case "sticker": {
+				this.canvas.drwaingModeOff();
 				this.stickerWrapper.style.display = "flex";
 				this.shapeWrapper.style.display = "none";
 				this.penWrapper.style.display = "none";
@@ -87,6 +89,7 @@ class ImageEditor {
 			}
 
 			case "pen": {
+				this.canvas.drwaingModeOn();
 				this.penWrapper.style.display = "flex";
 				this.shapeWrapper.style.display = "none";
 				this.stickerWrapper.style.display = "none";
@@ -94,6 +97,7 @@ class ImageEditor {
 			}
 
 			default: {
+				this.canvas.drwaingModeOff();
 				this.stickerWrapper.style.display = "none";
 				this.shapeWrapper.style.display = "none";
 				this.penWrapper.style.display = "none";
@@ -169,11 +173,12 @@ class ImageEditor {
 		const target = findTargetElementByType(event.target, "bottomMenu");
 		if (target) {
 			const mode = target.dataset.mode as Mode;
+
 			const parent = target.parentElement;
 
 			this.canvas.drwaingModeOff();
 			this.canvas.setState({
-				mode,
+				mode: this.canvas.state.mode === mode ? "normal" : mode,
 				viewSelectColorPicker: false,
 			});
 			parent.innerHTML = "";

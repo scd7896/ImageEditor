@@ -1,6 +1,7 @@
 import { IObserverState } from "../types/CanvasState";
+import Canvas from "./Canvas";
 import PenEvent from "./events/PenEvent";
-import { penSizeList } from "./util/constant";
+import { DEFAULT_WIDTH, penSizeList } from "./util/constant";
 
 class Pen implements IObserverState {
 	constructor(wrapper: HTMLDivElement, event: PenEvent) {
@@ -14,6 +15,7 @@ class Pen implements IObserverState {
 			icon.classList.add("penSizeIcon");
 			button.classList.add("penSizeButton");
 			button.appendChild(icon);
+			if (size === DEFAULT_WIDTH) icon.classList.add("selected");
 			wrapper.appendChild(button);
 		});
 		wrapper.addEventListener("click", event.sizeClickEvent.bind(event));
