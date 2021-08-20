@@ -69,6 +69,16 @@ const ImageInput = () => {
 export default ImageInput;
 ```
 
+# Demo
+https://scd7896.github.io/ImageEditor/examples/
+
+![KakaoTalk_Photo_2021-08-20-19-43-26](https://user-images.githubusercontent.com/46440142/130221962-7425a04d-9e50-4b80-8595-bd499c29df44.jpeg)
+
+https://user-images.githubusercontent.com/46440142/130221972-0dac516b-4651-4ea0-b97b-cceaba493ffb.mp4
+
+
+
+
 # author
 - Developer: Kim Server (scd7896@gmail.com)
 - Designer: MJ Jang (https://mjjang.myportfolio.com/work)
